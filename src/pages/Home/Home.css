@@ -1,0 +1,90 @@
+.container {
+  padding: 0 50px;
+  color: var(--fontColor);
+
+  .toggler {
+    text-align: right;
+  }
+  .title {
+    display: flex;
+    color: var(--blue);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 500;
+    font-size: 32px;
+    margin: 50px var(--xl-gutter);
+    @media (--m) {
+      font-size: 28px;
+    }
+    .logo {
+      margin-right: var(--gutter);
+    }
+    svg {
+      width: 68px;
+      min-width: 55px;
+      height: auto
+    }
+  }
+  .highlight {
+    padding: 2px 5px;
+    background: var(--dustygray);
+    color: white;
+    border-radius: 5px;
+  }
+  .highlight.blue {
+    background: var(--mainColor);
+  }
+}
+
+.mainProcess {
+  margin: 40px;
+  .placeholder {
+    height: 15px;
+  }
+  .addr {
+    label {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  }
+  .share {
+    margin-top: 40px;
+    .promo {
+      font-size: 14px;
+      text-decoration: underline;
+      font-family: var(--iconFont);
+      color: var(--mainColor);
+    }
+    .urlInput {
+      margin-top: 10px;
+    }
+  }
+  .apply {
+    .applyBtn {
+      margin: 10px auto 0;
+      font-weight: 500;
+      font-family: var(--iconFont);
+    }
+  }
+}
+
+.qaSection {
+  margin-bottom: 60px;
+  .qa {
+    .q {
+      font-weight: 500;
+      margin: 10px 0 2px;
+    }
+    .a {
+      margin-left: 12px;
+      .sns {
+        font-weight: 500;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

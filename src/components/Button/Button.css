@@ -1,0 +1,52 @@
+.button {
+  /* default style */
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  height: 36px;
+  padding: 0 15px;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 rgba(50, 50, 93, 0.08), 0 1px 1.5px 0 rgba(50, 50, 93, 0.08), 0 0 0 1px rgba(50, 50, 93, 0.1);
+  color: var(--fontColor);
+  font-size: 14px;
+  line-height: 36px;
+  transition: all .3s;
+  user-select: none;
+  /* theme */
+  &.basic {
+    background-color: #fff;
+    &:hover {
+      background-color: var(--mainColor);
+      color: #fff;
+    }
+  }
+  &.primary {
+    color: #fff;
+    background-color: var(--mainColor);
+    &:hover {
+      background-color: color(var(--mainColor) shade(25%));
+    }
+  }
+  /* variant */
+  &.lg {
+    font-size: 16px;
+  }
+  &.small {
+  }
+  /* common props */
+  &.fullwidth {
+    display: block;
+    width: 100%;
+    margin-right: 0;
+    text-align: center;
+  }
+  &:disabled {
+    background-color: var(--dustygray);
+    color: #fff;
+    cursor: not-allowed;
+    &:hover {
+      background-color: var(--dustygray);
+      color: #fff
+    }
+  }
+}

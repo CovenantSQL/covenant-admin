@@ -1,0 +1,18 @@
+.card {
+  padding: var(--gutter);
+  margin-bottom: var(--l-gutter);
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.01), 0 5px 10px 0 rgba(50, 50, 93, 0.08);
+  transition: all .3s;
+}
+.large {
+  padding: var(--m-gutter) var(--l-gutter) var(--gutter);
+}
+.noSidePadding {
+  padding-left: 0;
+  padding-right: 0;
+}
+.noPadding {
+  padding: 0;
+}
