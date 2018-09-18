@@ -4,7 +4,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { Timeline, Divider, Icon, notification } from 'antd'
 
-import * as UserAction from '~/actions/User'
+import { postFaucet } from '~/actions/Faucet'
 
 import t from '~/utils/locales'
 import Page from '~/components/Page'
@@ -26,7 +26,10 @@ class Home extends React.Component {
     addrErr: false
   }
   componentDidMount () {
-    // this.props.getUser('foreseaz')
+    this.props.postFaucet({
+      address: '4j2MMwPAH8Z3v8BEyRXDnVpA82nB6DgRHxxGroLfU4S7Qk5k9vQ',
+      media_url: 'https://weibo.com/1749287987/GzWyo1Ryh'
+    })
   }
 
   onCopyClick = () => {
@@ -73,7 +76,7 @@ class Home extends React.Component {
               <TextInput
                 value={addr}
                 onInput={this.onAddrInput}
-                placeholder="4..."
+                placeholder="Input your ConvenantSQL address"
               />
             </div>
             <div className={styles.share}>
@@ -130,17 +133,17 @@ class Home extends React.Component {
               <ul className={styles.a}>
                 <li>
                   <p className={styles.sns}><Icon type="twitter" theme="outlined" /> Twitter</p>
-                  <p>1. Twitter above auto-generating content</p>
+                  <p>1. Publish a public tweet with above content</p>
                   <p>2. Copy the tweet URL <span className={styles.highlight}>https://twitter.com/uesr_name/status/status_id</span> into above box and click Apply button.</p>
                 </li>
                 <li>
                   <p className={styles.sns}><Icon type="facebook" theme="outlined" /> Facebook</p>
-                  <p>1. Push a public facebook post with above content</p>
+                  <p>1. Publish a public facebook post with above content</p>
                   <p>2. Copy the public post URL <span className={styles.highlight}>https://www.facebook.com/user_name/posts/post_id</span> into above box and click Apply button.</p>
                 </li>
                 <li>
                   <p className={styles.sns}><Icon type="weibo" theme="outlined" /> Weibo</p>
-                  <p>1. Push a public weibo with above content</p>
+                  <p>1. Publish a public weibo with above content</p>
                   <p>2. Copy the public post URL <span className={styles.highlight}>https://weibo.com/user_id/post_id</span> into above box and click Apply button.</p>
                 </li>
               </ul>
@@ -161,7 +164,7 @@ const mapStateToProps = state => ({
   user: state.user
 })
 const mapDispatchToProps = {
-  ...UserAction
+  postFaucet
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

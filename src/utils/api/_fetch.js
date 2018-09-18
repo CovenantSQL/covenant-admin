@@ -30,7 +30,7 @@ export default ({
   api, method, path, query, body
 }) => {
   const queries = _isEmtpy(query) ? '' : `?${qs.encode(query)}`
-  const _url = `${API_HOST}/${api.service}/${api.version}${path}${queries}`
+  const _url = `${API_HOST}/${api.prefix || ''}${api.version}${path}${queries}`
 
   const API_HEADERS = {} // placeholder
 

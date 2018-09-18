@@ -1,15 +1,15 @@
 import * as ACTION_TYPES from '~/actions/types'
 
 const initialState = {
-  postRes: ''
+  userInfo: {}
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ACTION_TYPES.POST_FAUCET:
+    case ACTION_TYPES.GET_USER:
       return {
         ...state,
-        postRes: action.data
+        userInfo: action.data
       }
     default:
       return state
