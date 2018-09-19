@@ -1,5 +1,8 @@
 .container {
   padding: 0 50px;
+  @media (--s) {
+    padding: 0 20px;
+  }
   color: var(--fontColor);
 
   .toggler {
@@ -16,6 +19,12 @@
     margin: 50px var(--xl-gutter);
     @media (--m) {
       font-size: 28px;
+    }
+    @media (--s) {
+      font-size: 20px;
+      svg {
+        width: 55px !important;
+      }
     }
     .logo {
       margin-right: var(--gutter);

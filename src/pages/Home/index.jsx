@@ -38,8 +38,6 @@ class Home extends React.Component {
     percent: 0,
     status: 'active'
   }
-  componentDidMount () {
-  }
 
   onCopyClick = () => {
     const { addr } = this.state
@@ -57,15 +55,15 @@ class Home extends React.Component {
   }
   checkAddresssValid = () => {
     const { addr } = this.state
-    if (!isValidCovenantAddress(addr)) {
-      message.error('CovenantSQL Address not Valid')
-    }
+    isValidCovenantAddress(addr)
+      ? message.success('Valid CovenantSQL Address')
+      : message.error('CovenantSQL Address not Valid')
   }
   checkURLValid = () => {
     const { url } = this.state
-    if (!isValidURL(url)) {
-      message.error('URL pattern not Valid')
-    }
+    isValidURL(url)
+      ? message.success('Valid URL Pattern')
+      : message.error('URL pattern not Valid')
   }
   onAddrErrClose = () => this.setState({ addrErr: false })
   onAddrInput = addr => { this.setState({ addr }) }
@@ -153,7 +151,7 @@ class Home extends React.Component {
             <div>
               <header className={styles.title}>
                 <Logo className={styles.logo} />
-                {t('title')}
+                <span>{t('title')}</span>
               </header>
             </div>
             <div className={styles.toggler}>
@@ -207,7 +205,7 @@ class Home extends React.Component {
               </Timeline>
               <div className={styles.apply}>
                 {
-                  this.state.applied &&
+                  this.state.state !== null &&
                     <Progress percent={this.state.percent} status={this.state.status} />
                 }
                 <Button
@@ -254,6 +252,10 @@ class Home extends React.Component {
             <div className={styles.qa}>
               <p className={styles.q}>4. How frequent does Particle fund?</p>
               <p className={styles.a}>10 PTC/Day.</p>
+            </div>
+            <div className={styles.qa}>
+              <p className={styles.q}>5. Can I use these PTC for ConvenantSQL main chain or other chain?</p>
+              <p className={styles.a}>No, you can only use them on our TestNet.</p>
             </div>
           </Page.Row>
         </Page>
