@@ -13,7 +13,7 @@ const Button = ({
   className,
   theme,
   variant,
-  isDisabled,
+  disabled,
   isFullwidth,
   link,
   onClick
@@ -30,7 +30,7 @@ const Button = ({
       href={link}
       className={classNames}
       onClick={(e) => { onClick && onClick(e) }}
-      disabled={isDisabled}
+      disabled={disabled}
     >
       {children}
     </Tag>
@@ -42,7 +42,7 @@ Button.propTypes = {
   className: PropTypes.string,
   theme: PropTypes.string, // basic|primary
   variant: PropTypes.string, // lg|sm
-  isDisabled: PropTypes.bool,
+  disabled: PropTypes.bool,
   isFullwidth: PropTypes.bool,
   onClick: PropTypes.func,
   link: PropTypes.string
@@ -50,7 +50,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
   theme: 'basic',
-  isDisabled: false,
+  disabled: false,
   isFullwidth: false
 }
 

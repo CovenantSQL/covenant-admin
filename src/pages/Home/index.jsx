@@ -1,10 +1,18 @@
 import * as React from 'react'
-// import classnames from 'classnames/bind'
+import copy from 'copy-to-clipboard'
+import _get from 'lodash/get'
 
 import { connect } from 'react-redux'
-import { Timeline, Divider, Icon, notification } from 'antd'
+import {
+  Timeline,
+  Divider,
+  Icon,
+  Progress,
+  message,
+  notification,
+} from 'antd'
 
-import { postFaucet } from '~/actions/Faucet'
+import { postFaucet, getFaucet } from '~/actions/Faucet'
 
 import t from '~/utils/locales'
 import Page from '~/components/Page'
@@ -12,6 +20,8 @@ import TextInput from '~/components/TextInput'
 import LocaleToggler from '~/components/LocaleToggler'
 import Button from '~/components/Button'
 import Footer from '~/components/Footer'
+
+import { isValidCovenantAddress, isValidURL } from '~/utils'
 
 import Logo from '~/assets/icons/faucet.svg'
 
@@ -23,24 +33,21 @@ class Home extends React.Component {
   state = {
     addr: '',
     url: '',
-    addrErr: false
+    applied: false,
+    state: null,
+    percent: 0,
+    status: 'active'
   }
   componentDidMount () {
-    this.props.postFaucet({
-      address: '4j2MMwPAH8Z3v8BEyRXDnVpA82nB6DgRHxxGroLfU4S7Qk5k9vQ',
-      media_url: 'https://weibo.com/1749287987/GzWyo1Ryh'
-    })
   }
 
   onCopyClick = () => {
-    const { addr, addrErr } = this.state
-    if (!addr || addrErr) {
-      notification.error({
-        message: 'CovenantSQL Address Not Valid',
-        description: 'Please make sure your CovenantSQL Address is valid.'
-      })
+    const { addr } = this.state
+    if (!isValidCovenantAddress(addr)) {
+      message.error('Please make sure your CovenantSQL Address is valid')
     } else {
-
+      copy(this.constructCopyText())
+      message.success('Successfully copied to your clipboard')
     }
   }
   constructCopyText = () => {
@@ -48,8 +55,94 @@ class Home extends React.Component {
     const text = `CovenantSQL TestNet address: ${addr} is request Particle #PTC, see more details of CovenantSQL on https://covenantsql.io`
     return text
   }
+  checkAddresssValid = () => {
+    const { addr } = this.state
+    if (!isValidCovenantAddress(addr)) {
+      message.error('CovenantSQL Address not Valid')
+    }
+  }
+  checkURLValid = () => {
+    const { url } = this.state
+    if (!isValidURL(url)) {
+      message.error('URL pattern not Valid')
+    }
+  }
+  onAddrErrClose = () => this.setState({ addrErr: false })
   onAddrInput = addr => { this.setState({ addr }) }
   onURLInput = url => { this.setState({ url }) }
+
+  onApplyClick = () => {
+    const { addr, url } = this.state
+    if (isValidCovenantAddress(addr) && isValidURL(url)) {
+      this.props.postFaucet({
+        address: addr,
+        media_url: url
+      }).then(this.faucetGetPolling)
+      this.setState({ applied: true })
+    } else {
+      message.error('Please make sure your CovenantSQL Address and SNS URL are valid')
+    }
+  }
+  faucetGetPolling = () => {
+    const { addr } = this.state
+    const { postRes } = this.props
+    const id = _get(postRes, ['data', 'id'], 'BACKEND_NO_ID')
+
+    this.polling = setInterval(() => {
+      this.props.getFaucet({ id, address: addr }).then(this.updateProgress)
+    }, 1000)
+  }
+  updateProgress = () => {
+    const { getRes } = this.props
+    const state = _get(getRes, ['data', 'state'], 0)
+
+    switch (state) {
+      default:
+      case 0:
+        this.setState(prevState => {
+          if (prevState.state !== state) {
+            notification.info({
+              message: 'Request Sent',
+              description: 'We are checking your SNS content...'
+            })
+          }
+          return { state, percent: 33 }
+        })
+        break
+      case 1:
+        this.setState(prevState => {
+          if (prevState.state !== state) {
+            notification.info({
+              message: 'SNS Content Verified',
+              description: 'Your SNS content is verified and we are sending PTC to your address.'
+            })
+          }
+          return { state, percent: 66 }
+        })
+        break
+      case 2:
+        this.setState({ percent: 100, applied: false })
+        notification.success({
+          message: 'PTC is Sent Successfully',
+          description: 'Congrats, PTC is sent to your address, check it out now!',
+          duration: 0
+        })
+        clearInterval(this.polling)
+        break
+      case 3:
+        this.setState({ percent: 66, status: 'exception', applied: false })
+        notification.error({
+          message: 'Error',
+          description: _get(getRes, ['data', 'reason']),
+          duration: 0
+        })
+        clearInterval(this.polling)
+        break
+    }
+  }
+  componentWillUnmount () {
+    clearInterval(this.polling)
+  }
 
   render () {
     const { addr } = this.state
@@ -76,6 +169,7 @@ class Home extends React.Component {
               <TextInput
                 value={addr}
                 onInput={this.onAddrInput}
+                onBlur={this.checkAddresssValid}
                 placeholder="Input your ConvenantSQL address"
               />
             </div>
@@ -95,7 +189,7 @@ class Home extends React.Component {
                 <Timeline.Item
                   dot={<Icon type="share-alt" style={{ fontSize: '16px' }} />}
                 >
-                  Step 2. Share to your preferred social media
+                  Step 2. Share to your preferred social media: <a target='_blank' rel='noopener noreferrer' href='https://twitter.com'>Twitter</a>, <a target='_blank' rel='noopener noreferrer' href='https://www.facebook.com'>Facebook</a>, <a target='_blank' rel='noopener noreferrer' href='http://weibo.com'>Weibo</a>
                   <div className={styles.placeholder} />
                 </Timeline.Item>
                 <Timeline.Item
@@ -105,13 +199,22 @@ class Home extends React.Component {
                   <TextInput
                     value={this.state.url}
                     onInput={this.onURLInput}
+                    onBlur={this.checkURLValid}
                     className={styles.urlInput}
                     placeholder="Input your social media URL"
                   />
                 </Timeline.Item>
               </Timeline>
               <div className={styles.apply}>
-                <Button className={styles.applyBtn}>
+                {
+                  this.state.applied &&
+                    <Progress percent={this.state.percent} status={this.state.status} />
+                }
+                <Button
+                  onClick={this.onApplyClick}
+                  className={styles.applyBtn}
+                  disabled={this.state.applied}
+                >
                   🚀Apply PTC
                 </Button>
               </div>
@@ -161,10 +264,12 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  postRes: state.faucet.postRes,
+  getRes: state.faucet.getRes
 })
 const mapDispatchToProps = {
-  postFaucet
+  postFaucet,
+  getFaucet
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

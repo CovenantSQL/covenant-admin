@@ -56,6 +56,7 @@
       text-decoration: underline;
       font-family: var(--iconFont);
       color: var(--mainColor);
+      text-align: left;
     }
     .urlInput {
       margin-top: 10px;
@@ -63,7 +64,7 @@
   }
   .apply {
     .applyBtn {
-      margin: 10px auto 0;
+      margin: 20px auto 0;
       font-weight: 500;
       font-family: var(--iconFont);
     }

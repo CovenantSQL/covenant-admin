@@ -3,6 +3,7 @@ import _merge from 'lodash/merge'
 import _isObject from 'lodash/isObject'
 import _isArray from 'lodash/isArray'
 import _isEmtpy from 'lodash/isEmpty'
+import _keys from 'lodash/keys'
 
 import { API_HOST } from '~/utils/constants'
 
@@ -27,7 +28,7 @@ const parseResponse = (res) => {
 }
 
 export default ({
-  api, method, path, query, body
+  api, method, path, query, content, body
 }) => {
   const queries = _isEmtpy(query) ? '' : `?${qs.encode(query)}`
   const _url = `${API_HOST}/${api.prefix || ''}${api.version}${path}${queries}`
@@ -42,16 +43,20 @@ export default ({
   if (body) {
     const isJSON = _isObject(body) || _isArray(body)
 
+    const isForm = content === 'FORM'
+    let formData = new URLSearchParams()
+    if (isForm) {
+      _keys(body).forEach(key => {
+        formData.append(key, body[key])
+      })
+    }
+
     _merge(_opts, {
-      headers: isJSON
-        ? {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-        : {},
-      body: isJSON
-        ? JSON.stringify(body)
-        : body
+      body: isForm
+        ? formData
+        : isJSON
+          ? JSON.stringify(body)
+          : body
     })
   }
 

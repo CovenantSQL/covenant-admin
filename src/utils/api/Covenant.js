@@ -15,6 +15,7 @@ export default {
     post ({ address, media_url }) {
       return _fetch({
         method: 'POST',
+        content: 'FORM',
         api: {
           version: 'v1'
         },
