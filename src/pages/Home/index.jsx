@@ -42,28 +42,28 @@ class Home extends React.Component {
   onCopyClick = () => {
     const { addr } = this.state
     if (!isValidCovenantAddress(addr)) {
-      message.error('Please make sure your CovenantSQL Address is valid')
+      message.error(t('msg_address_err'))
     } else {
       copy(this.constructCopyText())
-      message.success('Successfully copied to your clipboard')
+      message.success(t('msg_copy_success'))
     }
   }
   constructCopyText = () => {
     const { addr } = this.state
-    const text = `CovenantSQL TestNet address: ${addr} is request Particle #PTC, see more details of CovenantSQL on https://covenantsql.io`
+    const text = t('share_text', addr)
     return text
   }
   checkAddresssValid = () => {
     const { addr } = this.state
     isValidCovenantAddress(addr)
-      ? message.success('Valid CovenantSQL Address')
-      : message.error('CovenantSQL Address not Valid')
+      ? message.success(t('msg_address_valid'))
+      : message.error(t('msg_address_not_valid'))
   }
   checkURLValid = () => {
     const { url } = this.state
     isValidURL(url)
-      ? message.success('Valid URL Pattern')
-      : message.error('URL pattern not Valid')
+      ? message.success(t('msg_url_valid'))
+      : message.error(t('msg_url_not_valid'))
   }
   onAddrErrClose = () => this.setState({ addrErr: false })
   onAddrInput = addr => { this.setState({ addr }) }
@@ -78,7 +78,7 @@ class Home extends React.Component {
       }).then(this.faucetGetPolling)
       this.setState({ applied: true })
     } else {
-      message.error('Please make sure your CovenantSQL Address and SNS URL are valid')
+      message.error(t('msg_both_valid'))
     }
   }
   faucetGetPolling = () => {
@@ -100,29 +100,29 @@ class Home extends React.Component {
         this.setState(prevState => {
           if (prevState.state !== state) {
             notification.info({
-              message: 'Request Sent',
-              description: 'We are checking your SNS content...'
+              message: t('progress0_t'),
+              description: t('progress0_d')
             })
           }
-          return { state, percent: 33 }
+          return { state, percent: 33, status: 'active' }
         })
         break
       case 1:
         this.setState(prevState => {
           if (prevState.state !== state) {
             notification.info({
-              message: 'SNS Content Verified',
-              description: 'Your SNS content is verified and we are sending PTC to your address.'
+              message: t('progress1_t'),
+              description: t('progress1_d')
             })
           }
-          return { state, percent: 66 }
+          return { state, percent: 66, status: 'active' }
         })
         break
       case 2:
         this.setState({ percent: 100, applied: false })
         notification.success({
-          message: 'PTC is Sent Successfully',
-          description: 'Congrats, PTC is sent to your address, check it out now!',
+          message: t('progress2_t'),
+          description: t('progress2_d'),
           duration: 0
         })
         clearInterval(this.polling)
@@ -130,8 +130,8 @@ class Home extends React.Component {
       case 3:
         this.setState({ percent: 66, status: 'exception', applied: false })
         notification.error({
-          message: 'Error',
-          description: _get(getRes, ['data', 'reason']),
+          message: t('progress3_t'),
+          description: t(_get(getRes, ['data', 'reason'])),
           duration: 0
         })
         clearInterval(this.polling)
@@ -168,13 +168,13 @@ class Home extends React.Component {
                 value={addr}
                 onInput={this.onAddrInput}
                 onBlur={this.checkAddresssValid}
-                placeholder="Input your ConvenantSQL address"
+                placeholder={t('addressPh')}
               />
             </div>
             <div className={styles.share}>
               <Timeline>
                 <Timeline.Item>
-                  Step 1. Copy below text
+                  {t('step1')}
                   <div>
                     <button
                       onClick={this.onCopyClick}
@@ -187,19 +187,19 @@ class Home extends React.Component {
                 <Timeline.Item
                   dot={<Icon type="share-alt" style={{ fontSize: '16px' }} />}
                 >
-                  Step 2. Share to your preferred social media: <a target='_blank' rel='noopener noreferrer' href='https://twitter.com'>Twitter</a>, <a target='_blank' rel='noopener noreferrer' href='https://www.facebook.com'>Facebook</a>, <a target='_blank' rel='noopener noreferrer' href='http://weibo.com'>Weibo</a>
+                  {t('step2')} <a target='_blank' rel='noopener noreferrer' href='https://twitter.com'>Twitter</a>, <a target='_blank' rel='noopener noreferrer' href='https://www.facebook.com'>Facebook</a>, <a target='_blank' rel='noopener noreferrer' href='http://weibo.com'>Weibo</a>
                   <div className={styles.placeholder} />
                 </Timeline.Item>
                 <Timeline.Item
                   dot={<Icon type="check-circle" theme="outlined" style={{ fontSize: '16px' }} />}
                 >
-                  Step 3. Input the media URL contains above content
+                  {t('step3')}
                   <TextInput
                     value={this.state.url}
                     onInput={this.onURLInput}
                     onBlur={this.checkURLValid}
                     className={styles.urlInput}
-                    placeholder="Input your social media URL"
+                    placeholder={t('urlPh')}
                   />
                 </Timeline.Item>
               </Timeline>
@@ -213,7 +213,7 @@ class Home extends React.Component {
                   className={styles.applyBtn}
                   disabled={this.state.applied}
                 >
-                  🚀Apply PTC
+                  🚀{t('apply')}
                 </Button>
               </div>
             </div>
@@ -222,40 +222,41 @@ class Home extends React.Component {
           <Page.Row className={styles.qaSection}>
             <p>Q&A:</p>
             <div className={styles.qa}>
-              <p className={styles.q}>1. What is Particle?</p>
-              <p className={styles.a}>Particle is a token used in our system that pegging to USD.</p>
+              <p className={styles.q}>{t('q1')}</p>
+              <p className={styles.a}>{t('a1')}</p>
             </div>
             <div className={styles.qa}>
-              <p className={styles.q}>2. Why should I provide social media URL?</p>
-              <p className={styles.a}>It aims to prevent attackers from exhausting Particle.</p>
+              <p className={styles.q}>{t('q2')}</p>
+              <p className={styles.a}>{t('a2')}</p>
             </div>
             <div className={styles.qa}>
-              <p className={styles.q}>3. Which social media can I use?</p>
+              <p className={styles.q}>{t('q3')}</p>
               <ul className={styles.a}>
                 <li>
                   <p className={styles.sns}><Icon type="twitter" theme="outlined" /> Twitter</p>
-                  <p>1. Publish a public tweet with above content</p>
-                  <p>2. Copy the tweet URL <span className={styles.highlight}>https://twitter.com/uesr_name/status/status_id</span> into above box and click Apply button.</p>
+                  <p>{t('tweeter_1')}</p>
+                  <p>{t('tweeter_2')} <span className={styles.highlight}>https://twitter.com/uesr_name/status/status_id</span> {t('click_apply')}</p>
                 </li>
                 <li>
                   <p className={styles.sns}><Icon type="facebook" theme="outlined" /> Facebook</p>
-                  <p>1. Publish a public facebook post with above content</p>
-                  <p>2. Copy the public post URL <span className={styles.highlight}>https://www.facebook.com/user_name/posts/post_id</span> into above box and click Apply button.</p>
+                  <p></p>
+                  <p>{t('facebook_1')}</p>
+                  <p>{t('facebook_2')} <span className={styles.highlight}>https://www.facebook.com/user_name/posts/post_id</span> {t('click_apply')}</p>
                 </li>
                 <li>
                   <p className={styles.sns}><Icon type="weibo" theme="outlined" /> Weibo</p>
-                  <p>1. Publish a public weibo with above content</p>
-                  <p>2. Copy the public post URL <span className={styles.highlight}>https://weibo.com/user_id/post_id</span> into above box and click Apply button.</p>
+                  <p>{t('weibo_1')}</p>
+                  <p>{t('weibo_2')} <span className={styles.highlight}>https://weibo.com/user_id/post_id</span> {t('click_apply')}</p>
                 </li>
               </ul>
             </div>
             <div className={styles.qa}>
-              <p className={styles.q}>4. How frequent does Particle fund?</p>
-              <p className={styles.a}>10 PTC/Day.</p>
+              <p className={styles.q}>{t('q4')}</p>
+              <p className={styles.a}>{t('a4')}</p>
             </div>
             <div className={styles.qa}>
-              <p className={styles.q}>5. Can I use these PTC for ConvenantSQL main chain or other chain?</p>
-              <p className={styles.a}>No, you can only use them on our TestNet.</p>
+              <p className={styles.q}>{t('q5')}</p>
+              <p className={styles.a}>{t('a5')}</p>
             </div>
           </Page.Row>
         </Page>

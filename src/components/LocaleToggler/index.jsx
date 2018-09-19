@@ -2,6 +2,7 @@ import React from 'react'
 import { Menu, Dropdown, Icon } from 'antd'
 
 import { getLanguage, setLanguage } from '~/utils'
+import t from '~/utils/locales'
 
 const locales = ['en', 'zh-hk', 'zh-cn']
 class LocaleToggler extends React.Component {
@@ -24,7 +25,7 @@ class LocaleToggler extends React.Component {
         {
           locales.map((locale, idx) => (
             <Menu.Item key={idx}>
-              {locales[idx]}
+              {t(locales[idx])}
             </Menu.Item>
           ))
         }
@@ -33,7 +34,7 @@ class LocaleToggler extends React.Component {
     return (
       <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
         <button>
-          {locale} <Icon type="down" />
+          {t(locale)} <Icon type="down" />
         </button>
       </Dropdown>
     )

@@ -35,7 +35,7 @@ class Footer extends React.Component {
           </p>
         </div>
         <div className={styles.credit}>
-          Power by <a href='https://github.com/CovenantSQL/CovenantSQL'><CovenantSQLIcon /></a>
+          Proudly Powered by <a href='https://github.com/CovenantSQL/CovenantSQL'><CovenantSQLIcon /></a>
         </div>
       </section>
     )
