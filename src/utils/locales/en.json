@@ -12,7 +12,7 @@
   "msg_both_valid": "Please make sure your CovenantSQL Address and SNS URL are valid",
   "share_text": "CovenantSQL TestNet address: %s is requesting Particle #PTC, see more details of CovenantSQL on https://covenantsql.io",
   "address": "CovenantSQL address",
-  "addressPh": "Input your ConvenantSQL address",
+  "addressPh": "Input your CovenantSQL address",
   "urlPh": "Input your social media URL",
   "step1": "Step 1. Copy below text",
   "step2": "Step 2. Share to your preferred social media:",
@@ -47,6 +47,6 @@
   "click_apply": "into above box and click Apply button.",
   "q4": "4. How frequent does Particle fund?",
   "a4": "10 PTC/Day.",
-  "q5": "5. Can I use these PTC for ConvenantSQL main chain or other chain?",
+  "q5": "5. Can I use these PTC for CovenantSQL main chain or other chain?",
   "a5": "No, you can only use them on our TestNet."
 }

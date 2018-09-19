@@ -1,6 +1,8 @@
 import * as ACTION_TYPES from './types'
 import Covenant from '~/utils/api/Covenant'
 
+import { message } from 'antd'
+
 export const postFaucet = ({ address, media_url }) => (dispatch) => {
   return Covenant.Faucet.post({ address, media_url })
     .then(({ data }) => {
@@ -8,6 +10,10 @@ export const postFaucet = ({ address, media_url }) => (dispatch) => {
         type: ACTION_TYPES.POST_FAUCET,
         data
       })
+    })
+    .catch(err => {
+      console.log(err)
+      message.error('ERR')
     })
 }
 

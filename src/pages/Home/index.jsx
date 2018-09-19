@@ -112,7 +112,8 @@ class Home extends React.Component {
           if (prevState.state !== state) {
             notification.info({
               message: t('progress1_t'),
-              description: t('progress1_d')
+              description: t('progress1_d'),
+              duration: 0
             })
           }
           return { state, percent: 66, status: 'active' }
