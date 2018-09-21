@@ -12,6 +12,7 @@
   "msg_both_valid": "请确保你的 CovenantSQL 地址和 URL 有效",
   "share_text": "CovenantSQL 测试网地址: %s 正在申请 Particle #PTC, 详细了解 CovenantSQL: https://covenantsql.io",
   "address": "CovenantSQL 地址",
+  "generate_addr": "如何生成 CovenantSQL 地址",
   "addressPh": "请输入你的 CovenantSQL 地址",
   "urlPh": "请输入社交网络帖子地址",
   "step1": "步骤 1. 复制如下文字",

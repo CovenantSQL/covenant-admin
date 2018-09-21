@@ -12,6 +12,7 @@
   "msg_both_valid": "Please make sure your CovenantSQL Address and SNS URL are valid",
   "share_text": "CovenantSQL TestNet address: %s is requesting Particle #PTC, see more details of CovenantSQL on https://covenantsql.io",
   "address": "CovenantSQL address",
+  "generate_addr": "How to Genentate Your CovenantSQL Address",
   "addressPh": "Input your CovenantSQL address",
   "urlPh": "Input your social media URL",
   "step1": "Step 1. Copy below text",
