@@ -75,7 +75,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "deploy": "scp -r build/* ubuntu@13.229.207.238:~/deploy/covenantsql-faucet/"
   },
   "eslintConfig": {
     "extends": "react-app"
