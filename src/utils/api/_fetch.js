@@ -60,7 +60,7 @@ export default ({
     })
   }
 
-  console.log(_opts)
+  // console.log(_opts)
 
   return fetch(_url, _opts)
     .then(checkStatus)

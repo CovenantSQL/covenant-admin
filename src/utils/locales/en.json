@@ -10,6 +10,7 @@
   "msg_url_valid": "Valid URL Pattern",
   "msg_url_not_valid": "URL pattern not Valid",
   "msg_both_valid": "Please make sure your CovenantSQL Address and SNS URL are valid",
+  "msg_netword_err": "Network error... please try again later",
   "share_text": "CovenantSQL TestNet address: %s is requesting Particle #PTC, see more details of CovenantSQL on https://covenantsql.io",
   "address": "CovenantSQL address",
   "generate_addr": "How to Genentate Your CovenantSQL Address",

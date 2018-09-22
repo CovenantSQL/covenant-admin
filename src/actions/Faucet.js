@@ -1,6 +1,7 @@
 import * as ACTION_TYPES from './types'
 import Covenant from '~/utils/api/Covenant'
 
+import t from '~/utils/locales'
 import { message } from 'antd'
 
 export const postFaucet = ({ address, media_url }) => (dispatch) => {
@@ -13,7 +14,8 @@ export const postFaucet = ({ address, media_url }) => (dispatch) => {
     })
     .catch(err => {
       console.log(err)
-      message.error('ERR')
+      message.error(t('msg_netword_err'))
+      return err
     })
 }
 

@@ -86,9 +86,14 @@ class Home extends React.Component {
     const { postRes } = this.props
     const id = _get(postRes, ['data', 'id'], 'BACKEND_NO_ID')
 
-    this.polling = setInterval(() => {
-      this.props.getFaucet({ id, address: addr }).then(this.updateProgress)
-    }, 1000)
+    console.log('getFaucet: ', id)
+    if (id !== 'BACKEND_NO_ID') {
+      this.polling = setInterval(() => {
+        this.props.getFaucet({ id, address: addr }).then(this.updateProgress)
+      }, 1000)
+    } else {
+      this.setState({ applied: false })
+    }
   }
   updateProgress = () => {
     const { getRes } = this.props
