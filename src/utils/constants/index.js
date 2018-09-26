@@ -1,1 +1,1 @@
-export const API_HOST = 'http://47.52.163.51:11109'
+export const API_HOST = 'https://testnet.covenantsql.io/api'
