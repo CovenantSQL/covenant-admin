@@ -1,8 +1,9 @@
 import * as ACTION_TYPES from './types'
 import Covenant from '~/utils/api/Covenant'
+import _get from 'lodash/get'
 
 import t from '~/utils/locales'
-import { message } from 'antd'
+import { notification } from 'antd'
 
 export const postFaucet = ({ address, media_url }) => (dispatch) => {
   return Covenant.Faucet.post({ address, media_url })
@@ -13,8 +14,14 @@ export const postFaucet = ({ address, media_url }) => (dispatch) => {
       })
     })
     .catch(err => {
-      console.log(err)
-      message.error(t('msg_netword_err'))
+      console.error(err)
+      const status = _get(err, 'status', '')
+
+      notification.error({
+        message: status !== '' ? t(status) : t('msg_netword_err'),
+        description: '',
+        duration: 0
+      })
       return err
     })
 }
