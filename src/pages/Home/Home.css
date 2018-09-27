@@ -5,8 +5,20 @@
   }
   color: var(--fontColor);
 
-  .toggler {
-    text-align: right;
+  .control {
+    display: flex;
+    justify-content: space-between;
+    .quickstart {
+      display: flex;
+      align-items: center;
+      > span {
+        margin-top: 4px;
+      }
+      svg {
+        width: 30px;
+        height: 30px;
+      }
+    }
   }
   .title {
     display: flex;
@@ -47,7 +59,7 @@
 }
 
 .mainProcess {
-  margin: 40px;
+  margin: 30px;
   .placeholder {
     height: 15px;
   }

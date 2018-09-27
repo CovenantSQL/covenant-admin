@@ -1,7 +1,7 @@
 import Home from '~/pages/Home'
-// import About from '~/pages/About'
+import Wiki from '~/pages/Wiki'
 
 export default [
   { path: '/', exact: true, component: Home },
-  // { path: '/about', component: About }
+  { path: '/quickstart', component: Wiki }
 ]

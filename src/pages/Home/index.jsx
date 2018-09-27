@@ -1,6 +1,7 @@
 import * as React from 'react'
 import copy from 'copy-to-clipboard'
 import _get from 'lodash/get'
+import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import {
@@ -24,11 +25,11 @@ import Footer from '~/components/Footer'
 import { isValidCovenantAddress, isValidURL } from '~/utils'
 
 import Logo from '~/assets/icons/faucet.svg'
+import QuickStartIcon from '~/assets/icons/quickstart.svg'
 
 import styles from './Home.css'
 import '~/styles/global/global.css'
 
-// const cx = classnames.bind(styles)
 class Home extends React.Component {
   state = {
     addr: '',
@@ -160,7 +161,13 @@ class Home extends React.Component {
                 <span>{t('title')}</span>
               </header>
             </div>
-            <div className={styles.toggler}>
+            <div className={styles.control}>
+              <Link to='/quickstart'>
+                <div className={styles.quickstart}>
+                  <QuickStartIcon />
+                  <span>CovenantSQL Quick Start (EN)</span>
+                </div>
+              </Link>
               <LocaleToggler />
             </div>
           </Page.Row>
