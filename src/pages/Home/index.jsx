@@ -46,6 +46,14 @@ class Home extends React.Component {
     qaCollapsed: true
   }
 
+  // componentDidMount () {
+  //   notification.success({
+  //     message: t('progress2_t'),
+  //     description: this.constructGotPTCDesc(),
+  //     duration: 0
+  //   })
+  // }
+
   onCopyClick = () => {
     const { addr } = this.state
     if (!isValidCovenantAddress(addr)) {
@@ -135,7 +143,7 @@ class Home extends React.Component {
         this.setState({ percent: 100, applied: false })
         notification.success({
           message: t('progress2_t'),
-          description: t('progress2_d'),
+          description: this.constructGotPTCDesc(),
           duration: 0
         })
         clearInterval(this.polling)
@@ -151,6 +159,11 @@ class Home extends React.Component {
         break
     }
   }
+  constructGotPTCDesc = () => (
+    <p>
+      {t('progress2_d')} <a href='/quickstart'>Quick Start</a>
+    </p>
+  )
   toggleQA = () => this.setState({ qaCollapsed: !this.state.qaCollapsed })
 
   componentWillUnmount () {

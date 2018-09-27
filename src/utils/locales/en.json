@@ -26,7 +26,7 @@
   "progress1_t": "SNS Content Verified",
   "progress1_d": "Your SNS content is verified and we are sending PTC to your address.",
   "progress2_t": "PTC is Sent Successfully",
-  "progress2_d": "Congrats, PTC is sent to your address, check it out now!",
+  "progress2_d": "Congrats, PTC is sent to your address, please read following document for how to use PTC and check balance:",
   "progress3_t": "Opssss...",
   "INVALID_URL": "Your sns media url is invalid",
   "INVALID_ADDRESS": "Your address is not a valid TestNet address",

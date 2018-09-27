@@ -26,7 +26,7 @@
   "progress1_t": "帖子已核實成功",
   "progress1_d": "你的社交網絡帖子已通過核實，我們正在發送 PTC 到你的地址，請耐心等待",
   "progress2_t": "PTC 發送成功",
-  "progress2_d": "恭喜, PTC 已發送到你的地址, 請查收 & have fun!",
+  "progress2_d": "恭喜, PTC 已發送到你的地址, 請閱讀文檔查看如何使用 PTC 以及查看餘額：",
   "progress3_t": "出錯了...",
   "INVALID_URL": "你提供的社交網絡帖子地址無效，請重新輸入",
   "INVALID_ADDRESS": "你提供的 CovenantSQL 地址不是有效的測試網地址，請重新輸入",
