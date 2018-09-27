@@ -17,7 +17,7 @@ import {
 import { postFaucet, getFaucet } from '~/actions/Faucet'
 
 import t from '~/utils/locales'
-import Page from '~/components/Page'
+// import Page from '~/components/Page'
 import TextInput from '~/components/TextInput'
 import LocaleToggler from '~/components/LocaleToggler'
 import Button from '~/components/Button'
@@ -28,6 +28,7 @@ import { isValidCovenantAddress, isValidURL } from '~/utils'
 import Logo from '~/assets/icons/faucet.svg'
 import QuickStartIcon from '~/assets/icons/quickstart.svg'
 import BugIcon from '~/assets/icons/bug.svg'
+import QuestionIcon from '~/assets/icons/question.svg'
 import ArrowDownIcon from '~/assets/icons/arrowDown.svg'
 
 import styles from './Home.css'
@@ -160,8 +161,8 @@ class Home extends React.Component {
     const { addr } = this.state
     return (
       <div>
-        <Page className={styles.container}>
-          <Page.Row>
+        <div className={styles.container}>
+          <div>
             <div>
               <header className={styles.title}>
                 <Logo className={styles.logo} />
@@ -177,9 +178,9 @@ class Home extends React.Component {
               </Link>
               <LocaleToggler />
             </div>
-          </Page.Row>
+          </div>
 
-          <Page.Row className={styles.mainProcess}>
+          <div className={styles.mainProcess}>
             <div className={styles.addr}>
               <label>
                 {t('address')}: (<a target='_blank' rel='noopener noreferrer' href='https://github.com/CovenantSQL/CovenantSQL/tree/develop/cmd/idminer' >{t('generate_addr')}</a>)
@@ -241,8 +242,9 @@ class Home extends React.Component {
               onClick={this.toggleQA}
               className={cx('toggler', {show: !this.state.qaCollapsed})}
             >
+              <QuestionIcon className={styles.quesitonIcon} />
               Q&A
-              <ArrowDownIcon />
+              <ArrowDownIcon className={styles.toggleIcon} />
             </a>
             <a
               target='_blank'
@@ -253,11 +255,10 @@ class Home extends React.Component {
               <BugIcon />
               <span>{t('submit_issue')}</span>
             </a>
-          </Page.Row>
+          </div>
           <div className={cx('qaWrapper', {show: !this.state.qaCollapsed})}>
             <Divider />
-            <Page.Row className={styles.qaSection}>
-              <p>Q&A:</p>
+            <div className={styles.qaSection}>
               <div className={styles.qa}>
                 <p className={styles.q}>{t('q1')}</p>
                 <p className={styles.a}>{t('a1')}</p>
@@ -295,9 +296,9 @@ class Home extends React.Component {
                 <p className={styles.q}>{t('q5')}</p>
                 <p className={styles.a}>{t('a5')}</p>
               </div>
-            </Page.Row>
+            </div>
           </div>
-        </Page>
+        </div>
         <Footer />
       </div>
     )
