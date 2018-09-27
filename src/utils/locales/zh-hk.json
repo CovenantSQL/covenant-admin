@@ -3,6 +3,7 @@
   "zh-hk": "繁體中文",
   "zh-cn": "简体中文",
   "title": "CovenantSQL 測試網 Particle(PTC) 水龍頭",
+  "submit_issue": "遇到問題?",
   "msg_address_err": "請確保你的 CovenantSQL 地址有效",
   "msg_address_not_valid": "CovenantSQL 地址無效",
   "msg_address_valid": "CovenantSQL 地址有效",

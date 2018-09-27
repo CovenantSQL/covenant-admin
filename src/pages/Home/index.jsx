@@ -26,6 +26,7 @@ import { isValidCovenantAddress, isValidURL } from '~/utils'
 
 import Logo from '~/assets/icons/faucet.svg'
 import QuickStartIcon from '~/assets/icons/quickstart.svg'
+import BugIcon from '~/assets/icons/bug.svg'
 
 import styles from './Home.css'
 import '~/styles/global/global.css'
@@ -175,7 +176,7 @@ class Home extends React.Component {
           <Page.Row className={styles.mainProcess}>
             <div className={styles.addr}>
               <label>
-                {t('address')}: (<a href='https://github.com/CovenantSQL/CovenantSQL/tree/develop/cmd/idminer' >{t('generate_addr')}</a>)
+                {t('address')}: (<a target='_blank' rel='noopener noreferrer' href='https://github.com/CovenantSQL/CovenantSQL/tree/develop/cmd/idminer' >{t('generate_addr')}</a>)
               </label>
               <TextInput
                 value={addr}
@@ -230,6 +231,10 @@ class Home extends React.Component {
                 </Button>
               </div>
             </div>
+            <a target='_blank' rel='noopener noreferrer' href='https://github.com/CovenantSQL/CovenantSQL/issues' className={styles.issue}>
+              <BugIcon />
+              <span>{t('submit_issue')}</span>
+            </a>
           </Page.Row>
           <Divider />
           <Page.Row className={styles.qaSection}>

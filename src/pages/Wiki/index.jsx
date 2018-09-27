@@ -1,5 +1,6 @@
 import * as React from 'react'
 import ReactMarkdown from 'react-markdown'
+import { Link } from 'react-router-dom'
 
 import styles from './Wiki.css'
 
@@ -22,7 +23,9 @@ class Wiki extends React.Component {
   render () {
     return (
       <div className={styles.markdown}>
-        <a href='/'>Back to Faucet</a>
+        <Link to='/'>
+          Back to Faucet
+        </Link>
         {
           this.state.raw &&
           <ReactMarkdown source={this.state.raw} />
