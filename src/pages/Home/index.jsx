@@ -1,4 +1,5 @@
 import * as React from 'react'
+import classnames from 'classnames/bind'
 import copy from 'copy-to-clipboard'
 import _get from 'lodash/get'
 import { Link } from 'react-router-dom'
@@ -27,10 +28,12 @@ import { isValidCovenantAddress, isValidURL } from '~/utils'
 import Logo from '~/assets/icons/faucet.svg'
 import QuickStartIcon from '~/assets/icons/quickstart.svg'
 import BugIcon from '~/assets/icons/bug.svg'
+import ArrowDownIcon from '~/assets/icons/arrowDown.svg'
 
 import styles from './Home.css'
 import '~/styles/global/global.css'
 
+const cx = classnames.bind(styles)
 class Home extends React.Component {
   state = {
     addr: '',
@@ -38,7 +41,8 @@ class Home extends React.Component {
     applied: false,
     state: null,
     percent: 0,
-    status: 'active'
+    status: 'active',
+    qaCollapsed: true
   }
 
   onCopyClick = () => {
@@ -146,6 +150,8 @@ class Home extends React.Component {
         break
     }
   }
+  toggleQA = () => this.setState({ qaCollapsed: !this.state.qaCollapsed })
+
   componentWillUnmount () {
     clearInterval(this.polling)
   }
@@ -231,52 +237,66 @@ class Home extends React.Component {
                 </Button>
               </div>
             </div>
-            <a target='_blank' rel='noopener noreferrer' href='https://github.com/CovenantSQL/CovenantSQL/issues' className={styles.issue}>
+            <a
+              onClick={this.toggleQA}
+              className={cx('toggler', {show: !this.state.qaCollapsed})}
+            >
+              Q&A
+              <ArrowDownIcon />
+            </a>
+            <a
+              target='_blank'
+              rel='noopener noreferrer'
+              href='https://github.com/CovenantSQL/CovenantSQL/issues'
+              className={styles.issue}
+            >
               <BugIcon />
               <span>{t('submit_issue')}</span>
             </a>
           </Page.Row>
-          <Divider />
-          <Page.Row className={styles.qaSection}>
-            <p>Q&A:</p>
-            <div className={styles.qa}>
-              <p className={styles.q}>{t('q1')}</p>
-              <p className={styles.a}>{t('a1')}</p>
-            </div>
-            <div className={styles.qa}>
-              <p className={styles.q}>{t('q2')}</p>
-              <p className={styles.a}>{t('a2')}</p>
-            </div>
-            <div className={styles.qa}>
-              <p className={styles.q}>{t('q3')}</p>
-              <ul className={styles.a}>
-                <li>
-                  <p className={styles.sns}><Icon type="twitter" theme="outlined" /> Twitter</p>
-                  <p>{t('tweeter_1')}</p>
-                  <p>{t('tweeter_2')} <span className={styles.highlight}>https://twitter.com/uesr_name/status/status_id</span> {t('click_apply')}</p>
-                </li>
-                <li>
-                  <p className={styles.sns}><Icon type="facebook" theme="outlined" /> Facebook</p>
-                  <p></p>
-                  <p>{t('facebook_1')}</p>
-                  <p>{t('facebook_2')} <span className={styles.highlight}>https://www.facebook.com/user_name/posts/post_id</span> {t('click_apply')}</p>
-                </li>
-                <li>
-                  <p className={styles.sns}><Icon type="weibo" theme="outlined" /> Weibo</p>
-                  <p>{t('weibo_1')}</p>
-                  <p>{t('weibo_2')} <span className={styles.highlight}>https://weibo.com/user_id/post_id</span> {t('click_apply')}</p>
-                </li>
-              </ul>
-            </div>
-            <div className={styles.qa}>
-              <p className={styles.q}>{t('q4')}</p>
-              <p className={styles.a}>{t('a4')}</p>
-            </div>
-            <div className={styles.qa}>
-              <p className={styles.q}>{t('q5')}</p>
-              <p className={styles.a}>{t('a5')}</p>
-            </div>
-          </Page.Row>
+          <div className={cx('qaWrapper', {show: !this.state.qaCollapsed})}>
+            <Divider />
+            <Page.Row className={styles.qaSection}>
+              <p>Q&A:</p>
+              <div className={styles.qa}>
+                <p className={styles.q}>{t('q1')}</p>
+                <p className={styles.a}>{t('a1')}</p>
+              </div>
+              <div className={styles.qa}>
+                <p className={styles.q}>{t('q2')}</p>
+                <p className={styles.a}>{t('a2')}</p>
+              </div>
+              <div className={styles.qa}>
+                <p className={styles.q}>{t('q3')}</p>
+                <ul className={styles.a}>
+                  <li>
+                    <p className={styles.sns}><Icon type="twitter" theme="outlined" /> Twitter</p>
+                    <p>{t('tweeter_1')}</p>
+                    <p>{t('tweeter_2')} <span className={styles.highlight}>https://twitter.com/uesr_name/status/status_id</span> {t('click_apply')}</p>
+                  </li>
+                  <li>
+                    <p className={styles.sns}><Icon type="facebook" theme="outlined" /> Facebook</p>
+                    <p></p>
+                    <p>{t('facebook_1')}</p>
+                    <p>{t('facebook_2')} <span className={styles.highlight}>https://www.facebook.com/user_name/posts/post_id</span> {t('click_apply')}</p>
+                  </li>
+                  <li>
+                    <p className={styles.sns}><Icon type="weibo" theme="outlined" /> Weibo</p>
+                    <p>{t('weibo_1')}</p>
+                    <p>{t('weibo_2')} <span className={styles.highlight}>https://weibo.com/user_id/post_id</span> {t('click_apply')}</p>
+                  </li>
+                </ul>
+              </div>
+              <div className={styles.qa}>
+                <p className={styles.q}>{t('q4')}</p>
+                <p className={styles.a}>{t('a4')}</p>
+              </div>
+              <div className={styles.qa}>
+                <p className={styles.q}>{t('q5')}</p>
+                <p className={styles.a}>{t('a5')}</p>
+              </div>
+            </Page.Row>
+          </div>
         </Page>
         <Footer />
       </div>

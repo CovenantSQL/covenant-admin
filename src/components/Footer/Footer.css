@@ -3,6 +3,7 @@
   min-height: 120px;
   background-color: var(--mainColor);
   padding: 0px 150px;
+  margin-top: 20px;
   color: white;
   font-size: 14px;
   display: flex;

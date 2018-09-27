@@ -91,20 +91,6 @@
       font-family: var(--iconFont);
     }
   }
-  .issue {
-    position: absolute;
-    bottom: -10px;
-    right: 0;
-    > span {
-      display: inline-block;
-      margin-left: 5px;
-      transform: translateY(-5px);
-    }
-    svg {
-      width: 20px;
-      height: auto;
-    }
-  }
 }
 
 .qaSection {
@@ -124,4 +110,49 @@
       }
     }
   }
+}
+
+.issue {
+  position: absolute;
+  bottom: -10px;
+  right: 0;
+  > span {
+    display: inline-block;
+    margin-left: 5px;
+    transform: translateY(-5px);
+  }
+  svg {
+    width: 20px;
+    height: auto;
+  }
+}
+.toggler {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  cursor: pointer;
+  svg {
+    transition: all .3s;
+    margin-left: 5px;
+    margin-bottom: 2px;
+  }
+}
+.toggler.show {
+  svg {
+    transform: rotateZ(180deg);
+  }
+}
+.qaWrapper {
+  margin-top: 5px;
+  width: 100%;
+  transition: all .3s;
+  transform: translateY(-10px);
+  overflow: hidden;
+  height: 0;
+  opacity: 0;
+}
+.qaWrapper.show {
+  opacity: 1;
+  height: auto;
+  transform: translateY(0px);
 }
