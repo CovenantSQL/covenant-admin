@@ -31,7 +31,7 @@
   "INVALID_URL": "你提供的社交网络帖子地址无效，请重新输入",
   "INVALID_ADDRESS": "你提供的 CovenantSQL 地址不是有效的测试网地址，请重新输入",
   "INVALID_APPLICATION_ID": "你的地址所生成的 APPLICATION_ID 无效，请尝试重新申请",
-  "ACCOUNT_QUOTA_EXCEEDED": "你的账户已超过每天的申请额度，请明天再申请",
+  "ACCOUNT_QUOTA_EXCEEDED": "你的社交账号已超过每天的申请额度，请明天再申请",
   "ADDRESS_QUOTA_EXCEEDED": "你的地址已超过每天的申请额度，请明天再申请",
   "ENQUEUE_FAILED": "系统繁忙，暂时无法处理你的申请，请稍后再试",
   "NO_REQUIRED_CONTENT": "你的帖子没有包含我们需要的内容，请复制步骤1中的文字重新发送",
