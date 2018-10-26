@@ -196,7 +196,7 @@ class Home extends React.Component {
           <div className={styles.mainProcess}>
             <div className={styles.addr}>
               <label>
-                {t('address')}: (<a target='_blank' rel='noopener noreferrer' href='https://github.com/CovenantSQL/CovenantSQL/tree/develop/cmd/idminer' >{t('generate_addr')}</a>)
+                {t('address')}:
               </label>
               <TextInput
                 value={addr}
