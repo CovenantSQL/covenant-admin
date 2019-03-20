@@ -5,6 +5,7 @@ module.exports = {
     "comma-dangle": 0,
     "jsx-a11y/accessible-emoji": 0,
     "no-control-regex": 0,
-    "no-useless-escape": 0
+    "no-useless-escape": 0,
+    "camelcase": 0,
   }
 }

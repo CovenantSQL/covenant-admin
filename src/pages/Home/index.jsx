@@ -1,6 +1,5 @@
 import * as React from 'react'
 import classnames from 'classnames/bind'
-import copy from 'copy-to-clipboard'
 import _get from 'lodash/get'
 import { Link } from 'react-router-dom'
 
@@ -14,18 +13,15 @@ import {
   notification,
 } from 'antd'
 
-import { postFaucet, getFaucet } from '~/actions/Faucet'
+import { applyToken, getAccountBalance } from '~/actions/Faucet'
 
 import t from '~/utils/locales'
 // import Page from '~/components/Page'
 import TextInput from '~/components/TextInput'
-import LocaleToggler from '~/components/LocaleToggler'
 import Button from '~/components/Button'
 import Footer from '~/components/Footer'
+import Menu from '~/components/Menu'
 
-import { isValidCovenantAddress, isValidURL } from '~/utils'
-
-import Logo from '~/assets/icons/faucet.svg'
 import QuickStartIcon from '~/assets/icons/quickstart.svg'
 import BugIcon from '~/assets/icons/bug.svg'
 import QuestionIcon from '~/assets/icons/question.svg'
@@ -38,7 +34,7 @@ const cx = classnames.bind(styles)
 class Home extends React.Component {
   state = {
     addr: '',
-    url: '',
+    email: '',
     applied: false,
     state: null,
     percent: 0,
@@ -46,70 +42,24 @@ class Home extends React.Component {
     qaCollapsed: true
   }
 
-  // componentDidMount () {
-  //   notification.success({
-  //     message: t('progress2_t'),
-  //     description: this.constructGotPTCDesc(),
-  //     duration: 0
-  //   })
-  // }
-
-  onCopyClick = () => {
-    const { addr } = this.state
-    if (!isValidCovenantAddress(addr)) {
-      message.error(t('msg_address_err'))
-    } else {
-      copy(this.constructCopyText())
-      message.success(t('msg_copy_success'))
-    }
-  }
-  constructCopyText = () => {
-    const { addr } = this.state
-    const text = t('share_text', addr)
-    return text
-  }
-  checkAddresssValid = () => {
-    const { addr } = this.state
-    isValidCovenantAddress(addr)
-      ? message.success(t('msg_address_valid'))
-      : message.error(t('msg_address_not_valid'))
-  }
-  checkURLValid = () => {
-    const { url } = this.state
-    isValidURL(url)
-      ? message.success(t('msg_url_valid'))
-      : message.error(t('msg_url_not_valid'))
-  }
   onAddrErrClose = () => this.setState({ addrErr: false })
   onAddrInput = addr => { this.setState({ addr }) }
-  onURLInput = url => { this.setState({ url }) }
+  onEmailInput = email => { this.setState({ email }) }
+  passedcheck = () => !!this.state.email && !!this.state.addr
 
   onApplyClick = () => {
-    const { addr, url } = this.state
-    if (isValidCovenantAddress(addr) && isValidURL(url)) {
-      this.props.postFaucet({
-        address: addr,
-        media_url: url
-      }).then(this.faucetGetPolling)
+    const { addr, email } = this.state
+    if (this.passedcheck()) {
+      this.props.applyToken({
+        account: addr,
+        email
+      }).then(() => this.props.getAccountBalance({ account: addr }))
       this.setState({ applied: true })
     } else {
       message.error(t('msg_both_valid'))
     }
   }
-  faucetGetPolling = () => {
-    const { addr } = this.state
-    const { postRes } = this.props
-    const id = _get(postRes, ['data', 'id'], 'BACKEND_NO_ID')
 
-    console.log('getFaucet: ', id)
-    if (id !== 'BACKEND_NO_ID') {
-      this.polling = setInterval(() => {
-        this.props.getFaucet({ id, address: addr }).then(this.updateProgress)
-      }, 1000)
-    } else {
-      this.setState({ applied: false })
-    }
-  }
   updateProgress = () => {
     const { getRes } = this.props
     const state = _get(getRes, ['data', 'state'], 0)
@@ -174,14 +124,9 @@ class Home extends React.Component {
     const { addr } = this.state
     return (
       <div>
+        <Menu />
         <div className={styles.container}>
           <div>
-            <div>
-              <header className={styles.title}>
-                <Logo className={styles.logo} />
-                <span>{t('title')}</span>
-              </header>
-            </div>
             <div className={styles.control}>
               <Link to='/quickstart'>
                 <div className={styles.quickstart}>
@@ -189,51 +134,33 @@ class Home extends React.Component {
                   <span>CovenantSQL Quick Start (EN)</span>
                 </div>
               </Link>
-              <LocaleToggler />
             </div>
           </div>
 
           <div className={styles.mainProcess}>
-            <div className={styles.addr}>
-              <label>
-                {t('address')}:
-              </label>
-              <TextInput
-                value={addr}
-                onInput={this.onAddrInput}
-                onBlur={this.checkAddresssValid}
-                placeholder={t('addressPh')}
-              />
-            </div>
             <div className={styles.share}>
               <Timeline>
                 <Timeline.Item>
                   {t('step1')}
-                  <div>
-                    <button
-                      onClick={this.onCopyClick}
-                      className={styles.promo}
-                    >
-                      {this.constructCopyText()}
-                    </button>
+                  <div className={styles.addr}>
+                    <TextInput
+                      value={addr}
+                      onInput={this.onAddrInput}
+                      placeholder={t('addressPh')}
+                      className={styles.input}
+                    />
                   </div>
-                </Timeline.Item>
-                <Timeline.Item
-                  dot={<Icon type="share-alt" style={{ fontSize: '16px' }} />}
-                >
-                  {t('step2')} <a target='_blank' rel='noopener noreferrer' href='https://twitter.com'>Twitter</a>, <a target='_blank' rel='noopener noreferrer' href='https://www.facebook.com'>Facebook</a>, <a target='_blank' rel='noopener noreferrer' href='http://weibo.com'>Weibo</a>
-                  <div className={styles.placeholder} />
                 </Timeline.Item>
                 <Timeline.Item
                   dot={<Icon type="check-circle" theme="outlined" style={{ fontSize: '16px' }} />}
                 >
-                  {t('step3')}
+                  {t('step2')}
                   <TextInput
-                    value={this.state.url}
-                    onInput={this.onURLInput}
-                    onBlur={this.checkURLValid}
-                    className={styles.urlInput}
-                    placeholder={t('urlPh')}
+                    value={this.state.email}
+                    type={'email'}
+                    onInput={this.onEmailInput}
+                    placeholder={t('emailPh')}
+                    className={styles.input}
                   />
                 </Timeline.Item>
               </Timeline>
@@ -323,8 +250,8 @@ const mapStateToProps = state => ({
   getRes: state.faucet.getRes
 })
 const mapDispatchToProps = {
-  postFaucet,
-  getFaucet
+  applyToken,
+  getAccountBalance
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

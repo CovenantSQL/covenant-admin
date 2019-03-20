@@ -1,28 +1,57 @@
 import * as React from 'react'
-import PropTypes from 'prop-types'
-
+import { connect } from 'react-redux'
+import { Button } from 'antd'
 import { Link } from 'react-router-dom'
+
+import LocaleToggler from '~/components/LocaleToggler'
+import LogoIcon from '~/assets/icons/logo.svg'
+
+import { getAccountBalance } from '~/actions/Faucet'
 
 import styles from './Menu.css'
 
-const Menu = ({ list }) => (
-  <div className={styles.menu}>
-    <ul>
-      {
-        list.map((link, idx) => (
-          <li key={idx}>
-            <Link className={styles.Link} to={link.to}>
-              {link.label}
-            </Link>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
-)
+class Menu extends React.Component {
+  componentDidMount () {
+    const { account } = this.props
+    if (account.address) {
+      this.props.getAccountBalance({ account: account.address })
+    }
+  }
+  render () {
+    const { account } = this.props
 
-Menu.propTypes = {
-  list: PropTypes.array.isRequired
+    return (
+      <header className={styles.header}>
+        <div className={styles.headerRow}>
+          <Link to='/'>
+            <div className={styles.headerLeft}>
+              <LogoIcon />
+            </div>
+          </Link>
+          <div className={styles.headerRight}>
+            {/*
+            <div>
+              <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>U</Avatar>
+            </div>
+            */}
+            <div className={styles.profile}>
+              <Button shape="circle" theme="twoTone" icon="smile" />
+            </div>
+            <div className={styles.balance}>
+              {account.balance} PTC
+            </div>
+            <LocaleToggler />
+          </div>
+        </div>
+      </header>
+    )
+  }
 }
 
-export default Menu
+const mapStateToProps = state => ({
+  account: state.faucet.account
+})
+const mapDispatchToProps = {
+  getAccountBalance
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Menu)
