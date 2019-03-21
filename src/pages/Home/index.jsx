@@ -1,36 +1,33 @@
 import * as React from 'react'
-import classnames from 'classnames/bind'
 import _get from 'lodash/get'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import {
   Timeline,
-  Divider,
+  Tabs,
   Icon,
   Progress,
   message,
   notification,
 } from 'antd'
 
-import { applyToken, getAccountBalance } from '~/actions/Faucet'
+import { applyToken, getAccountBalance, createDb } from '~/actions/Faucet'
 
 import t from '~/utils/locales'
-// import Page from '~/components/Page'
 import TextInput from '~/components/TextInput'
 import Button from '~/components/Button'
 import Footer from '~/components/Footer'
-import Menu from '~/components/Menu'
+import Nav from '~/components/Nav'
+import Card from '~/components/Card'
 
-import QuickStartIcon from '~/assets/icons/quickstart.svg'
-import BugIcon from '~/assets/icons/bug.svg'
-import QuestionIcon from '~/assets/icons/question.svg'
-import ArrowDownIcon from '~/assets/icons/arrowDown.svg'
+import QnA from './QnA'
 
 import styles from './Home.css'
 import '~/styles/global/global.css'
 
-const cx = classnames.bind(styles)
+const TabPane = Tabs.TabPane
+
 class Home extends React.Component {
   state = {
     addr: '',
@@ -58,6 +55,11 @@ class Home extends React.Component {
     } else {
       message.error(t('msg_both_valid'))
     }
+  }
+
+  onCreateDB = () => {
+    const { address } = this.props.account
+    this.props.createDb({ account: address })
   }
 
   updateProgress = () => {
@@ -124,120 +126,68 @@ class Home extends React.Component {
     const { addr } = this.state
     return (
       <div>
-        <Menu />
+        <Nav />
         <div className={styles.container}>
-          <div>
-            <div className={styles.control}>
-              <Link to='/quickstart'>
-                <div className={styles.quickstart}>
-                  <QuickStartIcon />
-                  <span>CovenantSQL Quick Start (EN)</span>
-                </div>
-              </Link>
-            </div>
-          </div>
-
-          <div className={styles.mainProcess}>
-            <div className={styles.share}>
-              <Timeline>
-                <Timeline.Item>
-                  {t('step1')}
-                  <div className={styles.addr}>
-                    <TextInput
-                      value={addr}
-                      onInput={this.onAddrInput}
-                      placeholder={t('addressPh')}
-                      className={styles.input}
-                    />
+          <Card>
+            <Tabs defaultActiveKey="1">
+              <TabPane tab={<span><Icon type="dollar" /> Apply Token </span>} key="1">
+                <div className={styles.mainProcess}>
+                  <Timeline>
+                    <Timeline.Item>
+                      {t('step1')}
+                      <div className={styles.addr}>
+                        <TextInput
+                          value={addr}
+                          onInput={this.onAddrInput}
+                          placeholder={t('addressPh')}
+                          className={styles.input}
+                        />
+                      </div>
+                    </Timeline.Item>
+                    <Timeline.Item
+                      dot={<Icon type="check-circle" theme="outlined" style={{ fontSize: '16px' }} />}
+                    >
+                      {t('step2')}
+                      <TextInput
+                        value={this.state.email}
+                        type={'email'}
+                        onInput={this.onEmailInput}
+                        placeholder={t('emailPh')}
+                        className={styles.input}
+                      />
+                    </Timeline.Item>
+                  </Timeline>
+                  <div className={styles.apply}>
+                    {
+                      this.state.state !== null &&
+                        <Progress percent={this.state.percent} status={this.state.status} />
+                    }
+                    <Button
+                      onClick={this.onApplyClick}
+                      className={styles.applyBtn}
+                      disabled={this.state.applied}
+                    >
+                      🚀{t('apply')}
+                    </Button>
                   </div>
-                </Timeline.Item>
-                <Timeline.Item
-                  dot={<Icon type="check-circle" theme="outlined" style={{ fontSize: '16px' }} />}
-                >
-                  {t('step2')}
-                  <TextInput
-                    value={this.state.email}
-                    type={'email'}
-                    onInput={this.onEmailInput}
-                    placeholder={t('emailPh')}
-                    className={styles.input}
-                  />
-                </Timeline.Item>
-              </Timeline>
-              <div className={styles.apply}>
-                {
-                  this.state.state !== null &&
-                    <Progress percent={this.state.percent} status={this.state.status} />
-                }
+                </div>
+              </TabPane>
+
+              <TabPane tab={<span><Icon type="database" />数据库管理</span>} key="2">
                 <Button
-                  onClick={this.onApplyClick}
+                  onClick={this.onCreateDB}
                   className={styles.applyBtn}
-                  disabled={this.state.applied}
                 >
-                  🚀{t('apply')}
+                  Create DB
                 </Button>
-              </div>
-            </div>
-            <a
-              onClick={this.toggleQA}
-              className={cx('toggler', {show: !this.state.qaCollapsed})}
-            >
-              <QuestionIcon className={styles.quesitonIcon} />
-              Q&A
-              <ArrowDownIcon className={styles.toggleIcon} />
-            </a>
-            <a
-              target='_blank'
-              rel='noopener noreferrer'
-              href='https://github.com/CovenantSQL/CovenantSQL/issues'
-              className={styles.issue}
-            >
-              <BugIcon />
-              <span>{t('submit_issue')}</span>
-            </a>
-          </div>
-          <div className={cx('qaWrapper', {show: !this.state.qaCollapsed})}>
-            <Divider />
-            <div className={styles.qaSection}>
-              <div className={styles.qa}>
-                <p className={styles.q}>{t('q1')}</p>
-                <p className={styles.a}>{t('a1')}</p>
-              </div>
-              <div className={styles.qa}>
-                <p className={styles.q}>{t('q2')}</p>
-                <p className={styles.a}>{t('a2')}</p>
-              </div>
-              <div className={styles.qa}>
-                <p className={styles.q}>{t('q3')}</p>
-                <ul className={styles.a}>
-                  <li>
-                    <p className={styles.sns}><Icon type="twitter" theme="outlined" /> Twitter</p>
-                    <p>{t('tweeter_1')}</p>
-                    <p>{t('tweeter_2')} <span className={styles.highlight}>https://twitter.com/uesr_name/status/status_id</span> {t('click_apply')}</p>
-                  </li>
-                  <li>
-                    <p className={styles.sns}><Icon type="facebook" theme="outlined" /> Facebook</p>
-                    <p></p>
-                    <p>{t('facebook_1')}</p>
-                    <p>{t('facebook_2')} <span className={styles.highlight}>https://www.facebook.com/user_name/posts/post_id</span> {t('click_apply')}</p>
-                  </li>
-                  <li>
-                    <p className={styles.sns}><Icon type="weibo" theme="outlined" /> Weibo</p>
-                    <p>{t('weibo_1')}</p>
-                    <p>{t('weibo_2')} <span className={styles.highlight}>https://weibo.com/user_id/post_id</span> {t('click_apply')}</p>
-                  </li>
-                </ul>
-              </div>
-              <div className={styles.qa}>
-                <p className={styles.q}>{t('q4')}</p>
-                <p className={styles.a}>{t('a4')}</p>
-              </div>
-              <div className={styles.qa}>
-                <p className={styles.q}>{t('q5')}</p>
-                <p className={styles.a}>{t('a5')}</p>
-              </div>
-            </div>
-          </div>
+              </TabPane>
+
+              <TabPane tab={<span><Icon type="question-circle" />常见问题</span>} key="3">
+                <QnA />
+              </TabPane>
+
+            </Tabs>
+          </Card>
         </div>
         <Footer />
       </div>
@@ -246,12 +196,12 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  postRes: state.faucet.postRes,
-  getRes: state.faucet.getRes
+  account: state.faucet.account,
 })
 const mapDispatchToProps = {
   applyToken,
-  getAccountBalance
+  getAccountBalance,
+  createDb,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

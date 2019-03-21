@@ -1,0 +1,72 @@
+.qaSection {
+  position: relative;
+  padding: 0 15px 30px;
+  .right {
+    text-align: right;
+  }
+  .qa {
+    .q {
+      font-weight: 500;
+      margin: 10px 0 5px;
+    }
+    .a {
+      margin-left: 12px;
+      .sns {
+        font-weight: 500;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.issue {
+  > span {
+    color: var(--fontColor);
+    display: inline-block;
+    transform: translateY(2px);
+    margin-left: 5px;
+  }
+  svg {
+    transform: translateY(5px);
+    width: 16px;
+    height: auto;
+  }
+}
+.toggler {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  cursor: pointer;
+  .quesitonIcon {
+    width: 18px;
+    height: auto;
+    margin-right: 5px;
+    transform: translateY(3px);
+  }
+  .toggleIcon {
+    transition: all .3s;
+    margin-left: 5px;
+    margin-bottom: 2px;
+  }
+}
+.toggler.show {
+  .toggleIcon {
+    transform: rotateZ(180deg);
+  }
+}
+.qaWrapper {
+  margin-top: 5px;
+  width: 100%;
+  transition: all .3s;
+  transform: translateY(-10px);
+  overflow: hidden;
+  height: 0;
+  opacity: 0;
+}
+.qaWrapper.show {
+  opacity: 1;
+  height: auto;
+  transform: translateY(0px);
+}

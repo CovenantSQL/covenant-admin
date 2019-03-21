@@ -1,30 +1,38 @@
-import * as ACTION_TYPES from '~/actions/types'
-import { getWalletAddress } from '~/utils/localStorage'
+import * as AT from '~/actions/types'
+import _uniqBy from 'lodash/uniqBy'
 
 const initialState = {
   account: {
-    address: getWalletAddress() || '',
+    address: '',
     email: '',
     balance: 0
   },
-  postRes: {},
-  getRes: {}
+  db: [],
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ACTION_TYPES.APPLY_TOKEN:
+    case AT.APPLY_TOKEN:
       return {
         ...state,
-        postRes: action.data
+        account: {
+          ...state.account,
+          address: action.account,
+          email: action.email
+        }
       }
-    case ACTION_TYPES.GET_ACCOUNT_BALANCE:
+    case AT.GET_ACCOUNT_BALANCE:
       return {
         ...state,
         account: {
           ...state.account,
           balance: action.balance
         }
+      }
+    case AT.CREATE_DB:
+      return {
+        ...state,
+        db: _uniqBy(state.db.push(action.data), 'db')
       }
     default:
       return state

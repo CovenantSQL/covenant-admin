@@ -7,7 +7,7 @@
   transition: all .3s;
 }
 .large {
-  padding: var(--m-gutter) var(--l-gutter) var(--gutter);
+  padding: var(--gutter) var(--l-gutter) var(--gutter);
 }
 .noSidePadding {
   padding-left: 0;
