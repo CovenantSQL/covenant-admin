@@ -12,7 +12,7 @@ import {
   notification,
 } from 'antd'
 
-import { applyToken, getAccountBalance, createDb } from '~/actions/Faucet'
+import { applyToken, getAccountBalance, createDB } from '~/actions/Faucet'
 
 import t from '~/utils/locales'
 import TextInput from '~/components/TextInput'
@@ -22,6 +22,7 @@ import Nav from '~/components/Nav'
 import Card from '~/components/Card'
 
 import QnA from './QnA'
+import DB from './DB'
 
 import styles from './Home.css'
 import '~/styles/global/global.css'
@@ -55,11 +56,6 @@ class Home extends React.Component {
     } else {
       message.error(t('msg_both_valid'))
     }
-  }
-
-  onCreateDB = () => {
-    const { address } = this.props.account
-    this.props.createDb({ account: address })
   }
 
   updateProgress = () => {
@@ -129,7 +125,7 @@ class Home extends React.Component {
         <Nav />
         <div className={styles.container}>
           <Card>
-            <Tabs defaultActiveKey="1">
+            <Tabs defaultActiveKey="2">
               <TabPane tab={<span><Icon type="dollar" /> 申请 PTC </span>} key="1">
                 <div className={styles.mainProcess}>
                   <Timeline>
@@ -180,12 +176,7 @@ class Home extends React.Component {
               </TabPane>
 
               <TabPane tab={<span><Icon type="database" />数据库管理</span>} key="2">
-                <Button
-                  onClick={this.onCreateDB}
-                  className={styles.applyBtn}
-                >
-                  Create DB
-                </Button>
+                <DB />
               </TabPane>
 
               <TabPane tab={<span><Icon type="question-circle" />常见问题</span>} key="3">
@@ -207,7 +198,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   applyToken,
   getAccountBalance,
-  createDb,
+  createDB,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

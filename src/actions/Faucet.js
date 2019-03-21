@@ -1,4 +1,4 @@
-import * as ACTION_TYPES from './types'
+import * as AT from './types'
 import _get from 'lodash/get'
 import { notification } from 'antd'
 
@@ -21,7 +21,7 @@ export const applyToken = ({ account, email }) => (dispatch) => {
   return Covenant.ApplyToken.post({ account, email })
     .then(({ data }) => {
       dispatch({
-        type: ACTION_TYPES.APPLY_TOKEN,
+        type: AT.APPLY_TOKEN,
         account,
         email,
         data
@@ -36,7 +36,7 @@ export const getAccountBalance = ({ account }) => (dispatch) => {
       console.log(data)
       const balance = data.data.balance
       dispatch({
-        type: ACTION_TYPES.GET_ACCOUNT_BALANCE,
+        type: AT.GET_ACCOUNT_BALANCE,
         balance
       })
     })
@@ -47,20 +47,24 @@ export const getDbBalance = ({ account, db }) => (dispatch) => {
   return Covenant.DbBlance.get({ account, db })
     .then(({ data }) => {
       dispatch({
-        type: ACTION_TYPES.GET_DB_BALANCE,
+        type: AT.GET_DB_BALANCE,
         data
       })
     })
     .catch(err => handleNetworkError(err))
 }
 
-export const createDb = ({ account }) => (dispatch) => {
+export const createDB = ({ account }) => (dispatch) => {
+  dispatch({ type: AT.SET_LOADING, key: 'createDB' })
   return Covenant.CreateDB.post({ account })
     .then(({ data }) => {
+      console.log('////////////////', data)
       dispatch({
-        type: ACTION_TYPES.CREATE_DB,
-        data
+        type: AT.CREATE_DB,
+        data: data.data
       })
+
+      dispatch({ type: AT.RM_LOADING, key: 'createDB' })
     })
     .catch(err => handleNetworkError(err))
 }

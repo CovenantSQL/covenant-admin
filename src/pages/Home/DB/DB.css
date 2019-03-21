@@ -1,0 +1,9 @@
+.action {
+  padding: 30px 15px 15px;
+  text-align: center;
+
+  .bar {
+    width: 170px;
+    margin: 0 auto;
+  }
+}
