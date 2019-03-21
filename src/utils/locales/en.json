@@ -16,7 +16,7 @@
   "address": "CovenantSQL address",
   "generate_addr": "How to Genentate Your CovenantSQL Address",
   "addressPh": "Input your CovenantSQL address",
-  "urlPh": "Input your social media URL",
+  "emailPh": "Input your Email address",
   "step1": "Step 1. Copy below text",
   "step2": "Step 2. Share to your preferred social media:",
   "step3": "Step 3. Input the media URL contains above content, details refer to Q&A",

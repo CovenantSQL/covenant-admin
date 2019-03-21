@@ -1,5 +1,5 @@
 .container {
-  min-height: calc(100vh - 140px);
+  min-height: calc(100vh - 360px);
   max-width: var(--l-breakpoint);
   margin: 20px auto 0;
 
@@ -96,4 +96,8 @@
       font-family: var(--iconFont);
     }
   }
+}
+
+.inputWrapper {
+  padding-top: 10px;
 }

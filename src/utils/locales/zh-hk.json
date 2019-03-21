@@ -16,7 +16,7 @@
   "address": "CovenantSQL 地址",
   "generate_addr": "如何生成 CovenantSQL 地址",
   "addressPh": "請輸入你的 CovenantSQL 地址",
-  "urlPh": "請輸入社交網絡帖子地址",
+  "emailPh": "請輸入 Email 地址",
   "step1": "步驟 1. 複製如下文字",
   "step2": "步驟 2. 分享到你常用的社交網絡:",
   "step3": "步驟 3. 輸入這個社交網絡帖子地址，規則詳見 Q&A",

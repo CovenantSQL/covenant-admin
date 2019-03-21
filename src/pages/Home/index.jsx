@@ -130,12 +130,14 @@ class Home extends React.Component {
         <div className={styles.container}>
           <Card>
             <Tabs defaultActiveKey="1">
-              <TabPane tab={<span><Icon type="dollar" /> Apply Token </span>} key="1">
+              <TabPane tab={<span><Icon type="dollar" /> 申请 PTC </span>} key="1">
                 <div className={styles.mainProcess}>
                   <Timeline>
                     <Timeline.Item>
-                      {t('step1')}
-                      <div className={styles.addr}>
+                      <label>
+                        CovenantSQL 钱包地址:
+                      </label>
+                      <div className={styles.inputWrapper}>
                         <TextInput
                           value={addr}
                           onInput={this.onAddrInput}
@@ -147,14 +149,18 @@ class Home extends React.Component {
                     <Timeline.Item
                       dot={<Icon type="check-circle" theme="outlined" style={{ fontSize: '16px' }} />}
                     >
-                      {t('step2')}
-                      <TextInput
-                        value={this.state.email}
-                        type={'email'}
-                        onInput={this.onEmailInput}
-                        placeholder={t('emailPh')}
-                        className={styles.input}
-                      />
+                      <label>
+                        Email 地址:
+                      </label>
+                      <div className={styles.inputWrapper}>
+                        <TextInput
+                          value={this.state.email}
+                          type={'email'}
+                          onInput={this.onEmailInput}
+                          placeholder={t('emailPh')}
+                          className={styles.input}
+                        />
+                      </div>
                     </Timeline.Item>
                   </Timeline>
                   <div className={styles.apply}>
