@@ -129,7 +129,7 @@ class Home extends React.Component {
         <Nav />
         <div className={styles.container}>
           <Card>
-            <Tabs defaultActiveKey="3">
+            <Tabs defaultActiveKey="1">
               <TabPane tab={<span><Icon type="dollar" /> 申请 PTC </span>} key="1">
                 <div className={styles.mainProcess}>
                   <Timeline>
