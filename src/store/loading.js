@@ -1,4 +1,6 @@
-import * as AT from '~/actions/types'
+// types
+export const SET_LOADING = 'loading/SET_LOADING'
+export const RM_LOADING = 'loading/RM_LOADING'
 
 // state
 const initialState = {
@@ -8,12 +10,12 @@ const initialState = {
 // reducers
 export default (state = initialState, action) => {
   switch (action.type) {
-    case AT.SET_LOADING:
+    case SET_LOADING:
       return {
         ...state,
         [action.key]: true
       }
-    case AT.RM_LOADING:
+    case RM_LOADING:
       return {
         ...state,
         [action.key]: false
@@ -25,9 +27,9 @@ export default (state = initialState, action) => {
 
 // actions
 export const setLoading = (key) => (dispatch) => {
-  dispatch({ type: AT.SET_LOADING, key })
+  dispatch({ type: SET_LOADING, key })
 }
 
 export const rmLoading = (key) => (dispatch) => {
-  dispatch({ type: AT.RM_LOADING, key })
+  dispatch({ type: RM_LOADING, key })
 }

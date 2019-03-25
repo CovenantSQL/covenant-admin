@@ -1,11 +1,16 @@
-import * as AT from '~/actions/types'
-
 import Covenant from '~/utils/api/Covenant'
 import t from '~/utils/locales'
 
 import _uniqBy from 'lodash/uniqBy'
 import _get from 'lodash/get'
 import { notification } from 'antd'
+
+// types
+import { SET_LOADING, RM_LOADING } from './loading'
+const APPLY_TOKEN = 'covenant/APPLY_TOKEN'
+const GET_ACCOUNT_BALANCE = 'covenant/GET_ACCOUNT_BALANCE'
+const GET_DB_BALANCE = 'covenant/GET_DB_BALANCE'
+const CREATE_DB = 'covenant/CREATE_DB'
 
 // state
 const initialState = {
@@ -20,7 +25,7 @@ const initialState = {
 // reducers
 export default (state = initialState, action) => {
   switch (action.type) {
-    case AT.APPLY_TOKEN:
+    case APPLY_TOKEN:
       return {
         ...state,
         account: {
@@ -29,7 +34,7 @@ export default (state = initialState, action) => {
           email: action.email
         }
       }
-    case AT.GET_ACCOUNT_BALANCE:
+    case GET_ACCOUNT_BALANCE:
       return {
         ...state,
         account: {
@@ -37,7 +42,7 @@ export default (state = initialState, action) => {
           balance: action.balance
         }
       }
-    case AT.CREATE_DB:
+    case CREATE_DB:
       return {
         ...state,
         db: _uniqBy(state.db.push(action.data), 'db')
@@ -64,7 +69,7 @@ export const applyToken = ({ account, email }) => (dispatch) => {
   return Covenant.ApplyToken.post({ account, email })
     .then(({ data }) => {
       dispatch({
-        type: AT.APPLY_TOKEN,
+        type: APPLY_TOKEN,
         account,
         email,
         data
@@ -79,7 +84,7 @@ export const getAccountBalance = ({ account }) => (dispatch) => {
       console.log(data)
       const balance = data.data.balance
       dispatch({
-        type: AT.GET_ACCOUNT_BALANCE,
+        type: GET_ACCOUNT_BALANCE,
         balance
       })
     })
@@ -90,7 +95,7 @@ export const getDbBalance = ({ account, db }) => (dispatch) => {
   return Covenant.DbBlance.get({ account, db })
     .then(({ data }) => {
       dispatch({
-        type: AT.GET_DB_BALANCE,
+        type: GET_DB_BALANCE,
         data
       })
     })
@@ -98,16 +103,16 @@ export const getDbBalance = ({ account, db }) => (dispatch) => {
 }
 
 export const createDB = ({ account }) => (dispatch) => {
-  dispatch({ type: AT.SET_LOADING, key: 'createDB' })
+  dispatch({ type: SET_LOADING, key: 'createDB' })
   return Covenant.CreateDB.post({ account })
     .then(({ data }) => {
       console.log('////////////////', data)
       dispatch({
-        type: AT.CREATE_DB,
+        type: CREATE_DB,
         data: data.data
       })
 
-      dispatch({ type: AT.RM_LOADING, key: 'createDB' })
+      dispatch({ type: RM_LOADING, key: 'createDB' })
     })
     .catch(err => handleNetworkError(err))
 }

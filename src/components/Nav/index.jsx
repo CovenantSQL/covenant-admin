@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import LocaleToggler from '~/components/LocaleToggler'
 import LogoIcon from '~/assets/icons/logo.svg'
 
-import { getAccountBalance } from '~/actions/Faucet'
+import { getAccountBalance } from '~/store/covenant'
 
 import styles from './Menu.css'
 
