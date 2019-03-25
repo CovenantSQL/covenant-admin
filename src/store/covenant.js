@@ -19,7 +19,7 @@ const initialState = {
     email: '',
     balance: 0
   },
-  db: [],
+  dbs: [],
   privatization: {}
 }
 
@@ -46,7 +46,7 @@ export default (state = initialState, action) => {
     case CREATE_DB:
       return {
         ...state,
-        db: action.db
+        dbs: action.dbs
       }
     case PRIVATIZE_DB:
       return {
@@ -90,7 +90,6 @@ export const applyToken = ({ account, email }) => (dispatch) => {
 export const getAccountBalance = ({ account }) => (dispatch) => {
   return Covenant.AccountBalance.get({ account })
     .then(({ data }) => {
-      console.log(data)
       const balance = data.data.balance
       dispatch({
         type: GET_ACCOUNT_BALANCE,
@@ -112,16 +111,16 @@ export const getDbBalance = ({ account, db }) => (dispatch) => {
 }
 
 export const createDB = ({ account }) => (dispatch, getState) => {
-  const currentDB = getState().cql.db
+  const currentDB = getState().cql.dbs
   dispatch({ type: SET_LOADING, key: 'createDB' })
   return Covenant.CreateDB.post({ account })
     .then(({ data }) => {
-      let db = currentDB.slice(0, currentDB.length)
-      db.push(data.data)
+      let dbs = currentDB.slice(0, currentDB.length)
+      dbs.push(data.data)
 
       dispatch({
         type: CREATE_DB,
-        db
+        dbs
       })
 
       dispatch({ type: RM_LOADING, key: 'createDB' })

@@ -26,7 +26,7 @@ class DB extends React.Component {
           ? this.state.percentage
           : this.state.percentage + Math.random() * 1000 % 5
       })
-    }, 1000)
+    }, 1200)
 
     this.props.createDB({ account: address }).then(() => {
       this.setState({ status: 'success' })
@@ -88,7 +88,7 @@ class DB extends React.Component {
   }
 
   render () {
-    const { db, privatization, loading } = this.props
+    const { dbs, privatization, loading } = this.props
 
     return (
       <div>
@@ -133,7 +133,7 @@ class DB extends React.Component {
             </span>
           )}
           columns={this.getColumns()}
-          dataSource={db}
+          dataSource={dbs}
         />
         <div className={styles.action}>
           {
@@ -163,7 +163,7 @@ class DB extends React.Component {
 
 const mapStateToProps = state => ({
   account: state.cql.account,
-  db: state.cql.db,
+  dbs: state.cql.dbs,
   privatization: state.cql.privatization,
   loading: state.loading,
 })

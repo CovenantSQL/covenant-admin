@@ -23,6 +23,7 @@ import Card from '~/components/Card'
 
 import QnA from './QnA'
 import DB from './DB'
+import Adminer from './Adminer'
 
 import styles from './Home.css'
 import '~/styles/global/global.css'
@@ -53,6 +54,9 @@ class Home extends React.Component {
         email
       }).then(() => this.props.getAccountBalance({ account: addr }))
       this.setState({ applied: true })
+      setTimeout(() => {
+        this.setState({ applied: false })
+      }, 5000)
     } else {
       message.error(t('msg_both_valid'))
     }
@@ -125,7 +129,7 @@ class Home extends React.Component {
         <Nav />
         <div className={styles.container}>
           <Card>
-            <Tabs defaultActiveKey="2">
+            <Tabs defaultActiveKey="3">
               <TabPane tab={<span><Icon type="dollar" /> 申请 PTC </span>} key="1">
                 <div className={styles.mainProcess}>
                   <Timeline>
@@ -179,7 +183,11 @@ class Home extends React.Component {
                 <DB />
               </TabPane>
 
-              <TabPane tab={<span><Icon type="question-circle" />常见问题</span>} key="3">
+              <TabPane tab={<span><Icon type="database" />Adminer</span>} key="3">
+                <Adminer dbid={_get(this.props.dbs, [0, 'db'], '')} />
+              </TabPane>
+
+              <TabPane tab={<span><Icon type="question-circle" />常见问题</span>} key="4">
                 <QnA />
               </TabPane>
 
@@ -194,6 +202,7 @@ class Home extends React.Component {
 
 const mapStateToProps = state => ({
   account: state.cql.account,
+  dbs: state.cql.dbs,
 })
 const mapDispatchToProps = {
   applyToken,
