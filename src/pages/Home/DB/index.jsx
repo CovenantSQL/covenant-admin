@@ -5,15 +5,15 @@ import LoadCon from 'react-loadcon'
 import { Modal, Table, Button, Progress } from 'antd'
 import HashTip from '~/components/HashTip'
 
-import { getAccountBalance, createDB } from '~/store/covenant'
+import { getAccountBalance, createDB, privatizeDB } from '~/store/covenant'
 
 import styles from './DB.css'
 
-const confirm = Modal.confirm
 class DB extends React.Component {
   state = {
     status: 'normal',
     percentage: 8,
+    visibles: {}
   }
 
   onCreateDB = () => {
@@ -72,24 +72,23 @@ class DB extends React.Component {
     return columns
   }
 
-  confirmMakePrivate = (dbid) => {
-    confirm({
-      title: '你确定私有化此数据库么?',
-      content: '私有化数据库后您将无法使用公网 Adminer 访问您的数据库，需要自行搭建数据库 Adminer',
-      okText: '是',
-      okType: 'danger',
-      cancelText: '否',
-      onOk () {
-        console.log('OK')
-      },
-      onCancel () {
-        console.log('Cancel')
-      },
+  handlePrivatize = (db) => {
+    const { address } = this.props.account
+    this.props.privatizeDB({ account: address, db }).then(() => {
+      this.hidePrivatizeModal(db)
     })
   }
 
+  showPrivatizeModal = (db) => {
+    this.setState({ visibles: { [db]: true } })
+  }
+
+  hidePrivatizeModal = (db) => {
+    this.setState({ visibles: { [db]: false } })
+  }
+
   render () {
-    const { db, loading } = this.props
+    const { db, privatization, loading } = this.props
 
     return (
       <div>
@@ -99,9 +98,38 @@ class DB extends React.Component {
           expandedRowRender={record => (
             <span>
               <span style={{color: 'orange', paddingRight: '5px'}}>⚠️ 警告: 私有化数据库后您将无法使用公网 Adminer 访问您的数据库</span>
-              <Button onClick={() => this.confirmMakePrivate(record.db)} type='dashed' size='small'>
+              <Button
+                onClick={() => this.showPrivatizeModal(record.db)}
+                type='dashed'
+                size='small'
+              >
                 私有化
               </Button>
+              {
+                !!privatization[record.db] &&
+                <p>
+                  此数据库已私有化：
+                  <a
+                    href={'http://scan.covenantsql.io/#/tx/' + privatization[record.db]}
+                    target='_blank'
+                  >
+                    <HashTip hash={privatization[record.db]} />
+                  </a>
+                </p>
+              }
+              <Modal
+                title='数据库私有化'
+                okText='是'
+                okType='danger'
+                cancelText='否'
+                visible={this.state.visibles[record.db]}
+                confirmLoading={loading.privatizeDB}
+                onOk={() => this.handlePrivatize(record.db)}
+                onCancel={() => this.hidePrivatizeModal(record.db)}
+              >
+                <p>{'私有化数据库后您将无法使用公网 Adminer 访问您的数据库，需要自行搭建数据库 Adminer。你确定私有化此数据库么?'}</p>
+                <HashTip hash={record.db} />
+              </Modal>
             </span>
           )}
           columns={this.getColumns()}
@@ -136,10 +164,12 @@ class DB extends React.Component {
 const mapStateToProps = state => ({
   account: state.cql.account,
   db: state.cql.db,
+  privatization: state.cql.privatization,
   loading: state.loading,
 })
 const mapDispatchToProps = {
   getAccountBalance,
   createDB,
+  privatizeDB,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(DB)

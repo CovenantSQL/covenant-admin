@@ -10,6 +10,7 @@ const APPLY_TOKEN = 'covenant/APPLY_TOKEN'
 const GET_ACCOUNT_BALANCE = 'covenant/GET_ACCOUNT_BALANCE'
 const GET_DB_BALANCE = 'covenant/GET_DB_BALANCE'
 const CREATE_DB = 'covenant/CREATE_DB'
+const PRIVATIZE_DB = 'covenant/PRIVATIZE_DB'
 
 // state
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
     balance: 0
   },
   db: [],
+  privatization: {}
 }
 
 // reducers
@@ -45,6 +47,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         db: action.db
+      }
+    case PRIVATIZE_DB:
+      return {
+        ...state,
+        privatization: {
+          ...state.privatization,
+          [action.db]: action.tx
+        }
       }
     default:
       return state
@@ -117,4 +127,18 @@ export const createDB = ({ account }) => (dispatch, getState) => {
       dispatch({ type: RM_LOADING, key: 'createDB' })
     })
     .catch(err => handleNetworkError(err))
+}
+
+export const privatizeDB = ({ account, db }) => (dispatch) => {
+  dispatch({ type: SET_LOADING, key: 'privatizeDB' })
+  return Covenant.Privatize.post({ account, db })
+    .then(({ data }) => {
+      let { tx } = data.data
+      dispatch({
+        type: PRIVATIZE_DB,
+        db,
+        tx
+      })
+      dispatch({ type: RM_LOADING, key: 'privatizeDB' })
+    })
 }

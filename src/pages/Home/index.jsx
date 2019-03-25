@@ -31,8 +31,8 @@ const TabPane = Tabs.TabPane
 
 class Home extends React.Component {
   state = {
-    addr: '',
-    email: '',
+    addr: this.props.account.address,
+    email: this.props.account.email,
     applied: false,
     state: null,
     percent: 0,

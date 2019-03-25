@@ -4,7 +4,8 @@ export const RM_LOADING = 'loading/RM_LOADING'
 
 // state
 const initialState = {
-  createDB: false
+  createDB: false,
+  privatizeDB: false,
 }
 
 // reducers
