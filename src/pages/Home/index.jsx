@@ -12,7 +12,7 @@ import {
   notification,
 } from 'antd'
 
-import { applyToken, getAccountBalance, createDB } from '~/actions/Faucet'
+import { applyToken, getAccountBalance, createDB } from '~/store/covenant'
 
 import t from '~/utils/locales'
 import TextInput from '~/components/TextInput'
@@ -193,7 +193,7 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  account: state.faucet.account,
+  account: state.cql.account,
 })
 const mapDispatchToProps = {
   applyToken,

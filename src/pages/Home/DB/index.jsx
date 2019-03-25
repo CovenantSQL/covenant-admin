@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { Button, Progress } from 'antd'
 
-import { getAccountBalance, createDB } from '~/actions/Faucet'
+import { getAccountBalance, createDB } from '~/store/covenant'
 
 import styles from './DB.css'
 
@@ -67,8 +67,8 @@ class DB extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  account: state.faucet.account,
-  db: state.faucet.db,
+  account: state.cql.account,
+  db: state.cql.db,
   loading: state.loading,
 })
 const mapDispatchToProps = {

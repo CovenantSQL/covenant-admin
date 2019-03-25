@@ -49,7 +49,7 @@ class Menu extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  account: state.faucet.account
+  account: state.cql.account
 })
 const mapDispatchToProps = {
   getAccountBalance

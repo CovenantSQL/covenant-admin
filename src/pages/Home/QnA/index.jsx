@@ -14,7 +14,7 @@ const QnA = () => {
           href='https://github.com/CovenantSQL/CovenantSQL/issues'
           className={styles.issue}
         >
-          遇到 Bug？给我们一个 Github Issue 吧 <BugIcon />
+          遇到 Bug？<BugIcon />
         </a>
       </div>
       <div className={styles.qa}>

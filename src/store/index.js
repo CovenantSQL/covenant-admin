@@ -1,16 +1,24 @@
-import { createStore, applyMiddleware, compose } from 'redux'
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux'
 import { createLogger } from 'redux-logger'
 
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web and AsyncStorage for react-native
-
 import thunk from 'redux-thunk'
-import reducers from '~/reducers'
+
+// reducers
+import cql from './covenant'
+import loading from './loading'
+
+const reducers = combineReducers({
+  cql,
+  loading,
+})
 
 // persistant
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['loading']
 }
 const persistedReducer = persistReducer(persistConfig, reducers)
 
