@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
+import LoadCon from 'react-loadcon'
 
 import { Modal, Table, Button, Progress } from 'antd'
 import HashTip from '~/components/HashTip'
@@ -11,23 +12,27 @@ import styles from './DB.css'
 const confirm = Modal.confirm
 class DB extends React.Component {
   state = {
-    status: 'active',
-    percent: 8,
+    status: 'normal',
+    percentage: 8,
   }
 
   onCreateDB = () => {
+    this.setState({ status: 'active' })
     const { address } = this.props.account
 
     const inter = setInterval(() => {
       this.setState({
-        percent: this.state.percent > 90
-          ? this.state.percent
-          : this.state.percent + Math.random() * 1000 % 5
+        percentage: this.state.percentage > 90
+          ? this.state.percentage
+          : this.state.percentage + Math.random() * 1000 % 5
       })
     }, 1000)
 
     this.props.createDB({ account: address }).then(() => {
-      this.setState({ percent: 100 })
+      this.setState({ status: 'success' })
+      setTimeout(() => {
+        this.setState({ status: 'normal', percentage: 100 })
+      }, 1500)
       clearInterval(inter)
     }).catch(e => {
       this.setState({ status: 'exception' })
@@ -88,6 +93,7 @@ class DB extends React.Component {
 
     return (
       <div>
+        <LoadCon status={this.state.status} percentage={this.state.percentage} />
         <Table
           rowKey="db"
           expandedRowRender={record => (
@@ -106,7 +112,7 @@ class DB extends React.Component {
             loading.createDB && (
               <div className={styles.bar}>
                 <Progress
-                  percent={this.state.percent}
+                  percent={this.state.percentage}
                   status={this.state.status}
                   showInfo={false}
                   size="small"
