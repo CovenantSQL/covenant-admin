@@ -1,7 +1,6 @@
 import Covenant from '~/utils/api/Covenant'
 import t from '~/utils/locales'
 
-import _uniqBy from 'lodash/uniqBy'
 import _get from 'lodash/get'
 import { notification } from 'antd'
 
@@ -45,7 +44,7 @@ export default (state = initialState, action) => {
     case CREATE_DB:
       return {
         ...state,
-        db: _uniqBy(state.db.push(action.data), 'db')
+        db: action.db
       }
     default:
       return state
@@ -102,14 +101,17 @@ export const getDbBalance = ({ account, db }) => (dispatch) => {
     .catch(err => handleNetworkError(err))
 }
 
-export const createDB = ({ account }) => (dispatch) => {
+export const createDB = ({ account }) => (dispatch, getState) => {
+  const currentDB = getState().cql.db
   dispatch({ type: SET_LOADING, key: 'createDB' })
   return Covenant.CreateDB.post({ account })
     .then(({ data }) => {
-      console.log('////////////////', data)
+      let db = currentDB.slice(0, currentDB.length)
+      db.push(data.data)
+
       dispatch({
         type: CREATE_DB,
-        data: data.data
+        db
       })
 
       dispatch({ type: RM_LOADING, key: 'createDB' })

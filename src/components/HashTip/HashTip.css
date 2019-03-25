@@ -1,0 +1,8 @@
+.hash {
+  display: inline;
+  font-family: 'Lucida Console', Monaco, monospace;
+  color: #666;
+  font-size: 12px;
+  padding-bottom: 1px;
+  border-bottom: 1px dashed #0c5cea;
+}
