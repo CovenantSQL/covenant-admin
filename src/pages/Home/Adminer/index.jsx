@@ -1,18 +1,33 @@
 import * as React from 'react'
 import Iframe from 'react-iframe'
 
+import { Spin } from 'antd'
 import { connect } from 'react-redux'
 import { setAdminerDBID } from '~/store/covenant'
 
 import styles from './Adminer.css'
 
 class Adminer extends React.Component {
+  state = {
+    loading: true
+  }
+
   componentDidMount () {
     const { dbs, adminer: { selected } } = this.props
     if (selected === '' && dbs.length !== 0) {
       this.props.setAdminerDBID({ dbid: dbs[0].db })
     }
   }
+
+  onFrameLoaded = () => {
+    this.setState({ loading: false })
+
+    const iframe = document.getElementById('adminer')
+    if (iframe) {
+      console.log(iframe)
+    }
+  }
+
   render () {
     const { dbs, adminer: { selected } } = this.props
     return (
@@ -20,15 +35,20 @@ class Adminer extends React.Component {
         {
           dbs.length !== 0
             ? (
-              <Iframe url={`https://web.covenantsql.io/?covenantsql=cql_adminer_adapter&username=&db=${selected}`}
-                width='100%'
-                height='600px'
-                id='adminer'
-                className='adminer'
-                display='initial'
-                position='relative'
-                allowFullScreen
-              />
+              <div className={styles.wrapper}>
+                { this.state.loading && <span className={styles.spinner}><Spin /></span> }
+                <Iframe
+                  url={`https://web.covenantsql.io/?covenantsql=cql_adminer_adapter&username=&db=${selected}`}
+                  width='100%'
+                  height='400px'
+                  id='adminer'
+                  className='adminer'
+                  display='initial'
+                  position='relative'
+                  onLoad={this.onFrameLoaded}
+                  allowFullScreen
+                />
+              </div>
             )
             : (
               <div className={styles.empty}>
