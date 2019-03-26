@@ -10,7 +10,7 @@
   "msg_copy_success": "成功复制到剪切板",
   "msg_url_valid": "URL 符合规则",
   "msg_url_not_valid": "URL 不符合规则",
-  "msg_both_valid": "请确保你的 CovenantSQL 地址和 URL 有效",
+  "msg_both_valid": "请确保你的 CovenantSQL 地址和 Email 有效",
   "msg_netword_err": "网络错误，请稍后再试",
   "share_text": "@CovenantLabs 区块链上的 SQL 数据库 CovenantSQL %s https://testnet.covenantsql.io",
   "address": "CovenantSQL 地址",

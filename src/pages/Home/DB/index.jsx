@@ -2,8 +2,9 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import LoadCon from 'react-loadcon'
 
-import { Modal, Table, Button, Progress } from 'antd'
+import { Modal, Table, Button, Progress, message } from 'antd'
 import HashTip from '~/components/HashTip'
+import t from '~/utils/locales'
 
 import {
   getAccountBalance,
@@ -22,8 +23,13 @@ class DB extends React.Component {
   }
 
   onCreateDB = () => {
-    this.setState({ status: 'active' })
     const { address } = this.props.account
+    if (address === '') {
+      message.error(t('msg_address_err'))
+      return
+    }
+
+    this.setState({ status: 'active' })
 
     const inter = setInterval(() => {
       this.setState({
