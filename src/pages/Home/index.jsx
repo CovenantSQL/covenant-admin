@@ -37,7 +37,7 @@ class Home extends React.Component {
     state: null,
     percent: 0,
     status: 'active',
-    qaCollapsed: true
+    tabKey: '1'
   }
 
   onAddrErrClose = () => this.setState({ addrErr: false })
@@ -61,6 +61,10 @@ class Home extends React.Component {
     }
   }
 
+  selectTab = (tabKey) => {
+    this.setState({ tabKey })
+  }
+
   render () {
     const { addr } = this.state
     return (
@@ -68,8 +72,8 @@ class Home extends React.Component {
         <Nav />
         <div className={styles.container}>
           <Card>
-            <Tabs defaultActiveKey="1">
-              <TabPane tab={<span><Icon type="dollar" /> 申请 PTC </span>} key="1">
+            <Tabs onTabClick={this.selectTab} activeKey={this.state.tabKey} defaultActiveKey="1">
+              <TabPane tab={<span><Icon type="dollar" />申请 PTC </span>} key="1">
                 <div className={styles.mainProcess}>
                   <Timeline>
                     <Timeline.Item>
@@ -119,7 +123,7 @@ class Home extends React.Component {
               </TabPane>
 
               <TabPane tab={<span><Icon type="database" />数据库管理</span>} key="2">
-                <DB />
+                <DB selectTab={this.selectTab} />
               </TabPane>
 
               <TabPane tab={<span><Icon type="deployment-unit" />Adminer</span>} key="3">

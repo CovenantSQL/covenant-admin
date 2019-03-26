@@ -5,7 +5,12 @@ import LoadCon from 'react-loadcon'
 import { Modal, Table, Button, Progress } from 'antd'
 import HashTip from '~/components/HashTip'
 
-import { getAccountBalance, createDB, privatizeDB } from '~/store/covenant'
+import {
+  getAccountBalance,
+  createDB,
+  privatizeDB,
+  setAdminerDBID
+} from '~/store/covenant'
 
 import styles from './DB.css'
 
@@ -40,6 +45,11 @@ class DB extends React.Component {
     })
   }
 
+  selectAdminer = (dbid) => {
+    this.props.setAdminerDBID({ dbid })
+    this.props.selectTab('3')
+  }
+
   getColumns = () => {
     const columns = [{
       title: 'DB ID',
@@ -64,7 +74,7 @@ class DB extends React.Component {
       key: 'action',
       render: (text, record) => (
         <span>
-          <a onClick={() => {}}>Adminer 管理数据库</a>
+          <a onClick={() => this.selectAdminer(record.db)}>Adminer 管理数据库</a>
         </span>
       )
     }]
@@ -171,5 +181,6 @@ const mapDispatchToProps = {
   getAccountBalance,
   createDB,
   privatizeDB,
+  setAdminerDBID,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(DB)
