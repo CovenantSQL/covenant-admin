@@ -62,6 +62,7 @@ class Menu extends React.Component {
           onCancel={this.hideModal}
         >
           <p>{'Web 环境生成钱包地址正在开发中，请先使用 cql 工具在终端中生成公私钥对，具体请参考'}</p>
+          <br />
           <a href='https://developers.covenantsql.io/docs/quickstart' target='_blank' rel='noopener noreferrer'>Quick Start</a>
         </Modal>
       </header>

@@ -9,7 +9,6 @@ import {
   Icon,
   Progress,
   message,
-  notification,
 } from 'antd'
 
 import { applyToken, getAccountBalance, createDB } from '~/store/covenant'
@@ -60,66 +59,6 @@ class Home extends React.Component {
     } else {
       message.error(t('msg_both_valid'))
     }
-  }
-
-  updateProgress = () => {
-    const { getRes } = this.props
-    const state = _get(getRes, ['data', 'state'], 0)
-
-    switch (state) {
-      default:
-      case 0:
-        this.setState(prevState => {
-          if (prevState.state !== state) {
-            notification.info({
-              message: t('progress0_t'),
-              description: t('progress0_d')
-            })
-          }
-          return { state, percent: 33, status: 'active' }
-        })
-        break
-      case 1:
-        this.setState(prevState => {
-          if (prevState.state !== state) {
-            notification.info({
-              message: t('progress1_t'),
-              description: t('progress1_d'),
-              duration: 0
-            })
-          }
-          return { state, percent: 66, status: 'active' }
-        })
-        break
-      case 2:
-        this.setState({ percent: 100, applied: false })
-        notification.success({
-          message: t('progress2_t'),
-          description: this.constructGotPTCDesc(),
-          duration: 0
-        })
-        clearInterval(this.polling)
-        break
-      case 3:
-        this.setState({ percent: 66, status: 'exception', applied: false })
-        notification.error({
-          message: t('progress3_t'),
-          description: t(_get(getRes, ['data', 'reason'])),
-          duration: 0
-        })
-        clearInterval(this.polling)
-        break
-    }
-  }
-  constructGotPTCDesc = () => (
-    <p>
-      {t('progress2_d')} <a href='/quickstart'>Quick Start</a>
-    </p>
-  )
-  toggleQA = () => this.setState({ qaCollapsed: !this.state.qaCollapsed })
-
-  componentWillUnmount () {
-    clearInterval(this.polling)
   }
 
   render () {
@@ -183,7 +122,7 @@ class Home extends React.Component {
                 <DB />
               </TabPane>
 
-              <TabPane tab={<span><Icon type="database" />Adminer</span>} key="3">
+              <TabPane tab={<span><Icon type="deployment-unit" />Adminer</span>} key="3">
                 <Adminer dbid={_get(this.props.dbs, [0, 'db'], '')} />
               </TabPane>
 

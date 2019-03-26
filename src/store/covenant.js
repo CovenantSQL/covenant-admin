@@ -11,6 +11,7 @@ const GET_ACCOUNT_BALANCE = 'covenant/GET_ACCOUNT_BALANCE'
 const GET_DB_BALANCE = 'covenant/GET_DB_BALANCE'
 const CREATE_DB = 'covenant/CREATE_DB'
 const PRIVATIZE_DB = 'covenant/PRIVATIZE_DB'
+const SET_ADMINER_DBID = 'covenant/SET_ADMINER_DBID'
 
 // state
 const initialState = {
@@ -20,6 +21,7 @@ const initialState = {
     balance: 0
   },
   dbs: [],
+  adminer: { selected: '' },
   privatization: {}
 }
 
@@ -54,6 +56,14 @@ export default (state = initialState, action) => {
         privatization: {
           ...state.privatization,
           [action.db]: action.tx
+        }
+      }
+    case SET_ADMINER_DBID:
+      return {
+        ...state,
+        adminer: {
+          ...state.adminer,
+          selected: action.dbid
         }
       }
     default:
@@ -140,4 +150,11 @@ export const privatizeDB = ({ account, db }) => (dispatch) => {
       })
       dispatch({ type: RM_LOADING, key: 'privatizeDB' })
     })
+}
+
+export const setAdminerDBID = ({ dbid }) => dispatch => {
+  dispatch({
+    type: SET_ADMINER_DBID,
+    dbid
+  })
 }
