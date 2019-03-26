@@ -31,7 +31,7 @@
   "INVALID_URL": "你提供的社交網絡帖子地址無效，請重新輸入",
   "INVALID_ADDRESS": "你提供的 CovenantSQL 地址不是有效的測試網地址，請重新輸入",
   "INVALID_APPLICATION_ID": "你的地址所生成的 APPLICATION_ID 無效，請嘗試重新申請",
-  "ACCOUNT_QUOTA_EXCEEDED": "你的社交賬號已超過每天的申請額度，請明天再申請",
+  "ACCOUNT_QUOTA_EXCEEDED": "你的賬戶已超過每天的申請額度，請明天再申請",
   "ADDRESS_QUOTA_EXCEEDED": "你的地址已超過每天的申請額度，請明天再申請",
   "ENQUEUE_FAILED": "系統繁忙，暫時無法處理你的申請，請稍後再試",
   "NO_REQUIRED_CONTENT": "你的帖子沒有包含我們需要的內容，請複製步驟1中的文字重新發送",

@@ -85,6 +85,7 @@ const handleNetworkError = (err) => {
 }
 
 export const applyToken = ({ account, email }) => (dispatch) => {
+  dispatch({ type: SET_LOADING, key: 'applyToken' })
   dispatch({
     type: APPLY_TOKEN,
     account,
@@ -93,6 +94,7 @@ export const applyToken = ({ account, email }) => (dispatch) => {
   return Covenant.ApplyToken.post({ account, email })
     .then(({ data }) => {
       console.log('token applied:', data)
+      dispatch({ type: RM_LOADING, key: 'applyToken' })
     })
     .catch(err => handleNetworkError(err))
 }

@@ -31,7 +31,7 @@
   "INVALID_URL": "Your sns media url is invalid",
   "INVALID_ADDRESS": "Your address is not a valid TestNet address",
   "INVALID_APPLICATION_ID": "The application id request by your addresss is invalid",
-  "ACCOUNT_QUOTA_EXCEEDED": "You has exceeded the SNS account daily application quota",
+  "ACCOUNT_QUOTA_EXCEEDED": "You has exceeded the account daily application quota",
   "ADDRESS_QUOTA_EXCEEDED": "You has exceeded the address daily application quota",
   "ENQUEUE_FAILED": "Busy, we cannot enqueue your application request, please try again later",
   "NO_REQUIRED_CONTENT": "Your SNS media content does not contain our required content, please copy and publish again",

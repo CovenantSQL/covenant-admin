@@ -6,6 +6,7 @@ export const RM_LOADING = 'loading/RM_LOADING'
 const initialState = {
   createDB: false,
   privatizeDB: false,
+  applyToken: false,
 }
 
 // reducers

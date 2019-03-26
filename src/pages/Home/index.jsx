@@ -8,6 +8,7 @@ import {
   Tabs,
   Icon,
   Progress,
+  Button,
   message,
 } from 'antd'
 
@@ -15,7 +16,6 @@ import { applyToken, getAccountBalance, createDB } from '~/store/covenant'
 
 import t from '~/utils/locales'
 import TextInput from '~/components/TextInput'
-import Button from '~/components/Button'
 import Footer from '~/components/Footer'
 import Nav from '~/components/Nav'
 import Card from '~/components/Card'
@@ -112,9 +112,9 @@ class Home extends React.Component {
                         <Progress percent={this.state.percent} status={this.state.status} />
                     }
                     <Button
+                      loading={this.props.loading.applyToken}
                       onClick={this.onApplyClick}
                       className={styles.applyBtn}
-                      disabled={this.state.applied}
                     >
                       🚀{t('apply')}
                     </Button>
@@ -146,6 +146,7 @@ class Home extends React.Component {
 const mapStateToProps = state => ({
   account: state.cql.account,
   dbs: state.cql.dbs,
+  loading: state.loading,
 })
 const mapDispatchToProps = {
   applyToken,
