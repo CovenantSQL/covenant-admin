@@ -1,4 +1,6 @@
-## CovenantSQL Faucet
+## CovenantSQL Admin
+
+![](/imgs/admin.png)
 
 ### usage
 + `yarn install`
@@ -17,6 +19,4 @@
   - `/api`: service-based api granularity
   - `/constants`: global constants
   - `/locales`: i18n
-+ `/actions`: redux actions
-+ `/reducers`: redux reducers
-+ `/store`: redux store
++ `/store`: redux store, acitons, reducers
