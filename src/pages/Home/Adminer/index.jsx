@@ -22,7 +22,7 @@ class Adminer extends React.Component {
             ? (
               <Iframe url={`http://192.168.2.100:11149/?covenantsql=cql_adminer_adapter&username=&db=${selected}`}
                 width='100%'
-                height='auto'
+                height='600px'
                 id='adminer'
                 className='adminer'
                 display='initial'

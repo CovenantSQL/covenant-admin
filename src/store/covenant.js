@@ -85,14 +85,14 @@ const handleNetworkError = (err) => {
 }
 
 export const applyToken = ({ account, email }) => (dispatch) => {
+  dispatch({
+    type: APPLY_TOKEN,
+    account,
+    email,
+  })
   return Covenant.ApplyToken.post({ account, email })
     .then(({ data }) => {
-      dispatch({
-        type: APPLY_TOKEN,
-        account,
-        email,
-        data
-      })
+      console.log('token applied:', data)
     })
     .catch(err => handleNetworkError(err))
 }
