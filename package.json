@@ -64,6 +64,7 @@
     "postcss-loader": "2.0.6",
     "postcss-nested": "^2.1.2",
     "promise": "8.0.1",
+    "randomatic": "^3.1.1",
     "react-dev-utils": "^4.0.1",
     "react-svg-loader": "^1.1.1",
     "redux-devtools": "^3.4.0",
