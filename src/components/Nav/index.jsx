@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Modal, Button } from 'antd'
+import { Modal, Button, Menu, Dropdown } from 'antd'
 import { Link } from 'react-router-dom'
 
+import { auth } from '~/App'
 import LocaleToggler from '~/components/LocaleToggler'
 import LogoIcon from '~/assets/icons/logo.svg'
 
@@ -10,7 +11,7 @@ import { getAccountBalance } from '~/store/covenant'
 
 import styles from './Menu.css'
 
-class Menu extends React.Component {
+class Nav extends React.Component {
   state = {
     visible: false
   }
@@ -26,6 +27,14 @@ class Menu extends React.Component {
   hideModal = () => {
     this.setState({ visible: false })
   }
+  menu = (
+    <Menu>
+      <Menu.Item>
+        <a onClick={auth.logout}>Logout</a>
+      </Menu.Item>
+    </Menu>
+  )
+
   render () {
     const { account } = this.props
 
@@ -44,7 +53,9 @@ class Menu extends React.Component {
             </div>
             */}
             <div className={styles.profile}>
-              <Button onClick={this.showModal} shape="circle" theme="twoTone" icon="smile" />
+              <Dropdown overlay={this.menu} placement="bottomCenter">
+                <Button onClick={this.showModal} shape="circle" theme="twoTone" icon="smile" />
+              </Dropdown>
             </div>
             <div className={styles.balance}>
               {account.balance} PTC
@@ -76,4 +87,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getAccountBalance
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Menu)
+export default connect(mapStateToProps, mapDispatchToProps)(Nav)

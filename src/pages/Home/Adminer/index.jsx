@@ -38,7 +38,7 @@ class Adminer extends React.Component {
               <div className={styles.wrapper}>
                 { this.state.loading && <span className={styles.spinner}><Spin /></span> }
                 <Iframe
-                  url={`https://web.covenantsql.io/?covenantsql=cql_adminer_adapter&username=&db=${selected}`}
+                  url={`http://web.testnet.covenantsql.io/?covenantsql=cql_adminer_adapter&username=&db=${selected}`}
                   width='100%'
                   height='400px'
                   id='adminer'

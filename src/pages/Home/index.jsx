@@ -40,6 +40,17 @@ class Home extends React.Component {
     tabKey: '1'
   }
 
+  componentDidMount () {
+    const { renewSession } = this.props.auth
+
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      renewSession()
+    } else {
+      message.info('You will be redirected to login page')
+      setTimeout(this.props.auth.login, 3000)
+    }
+  }
+
   onAddrErrClose = () => this.setState({ addrErr: false })
   onAddrInput = addr => { this.setState({ addr }) }
   onEmailInput = email => { this.setState({ email }) }
@@ -63,6 +74,10 @@ class Home extends React.Component {
 
   selectTab = (tabKey) => {
     this.setState({ tabKey })
+  }
+
+  goTo = (route) => {
+    this.props.history.replace(`/${route}`)
   }
 
   render () {
