@@ -1,18 +1,19 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Modal, Button } from 'antd'
+import { Menu, Dropdown, Modal, Button } from 'antd'
 import { Link } from 'react-router-dom'
 
 import LocaleToggler from '~/components/LocaleToggler'
+import CreateWalletModal from '~/components/Modals/CreateWallet'
 import LogoIcon from '~/assets/icons/logo.svg'
 
 import { getAccountBalance } from '~/store/covenant'
 
 import styles from './Menu.css'
 
-class Menu extends React.Component {
+class Nav extends React.Component {
   state = {
-    visible: false
+    createAccountModalVisible: true
   }
   componentDidMount () {
     const { account } = this.props
@@ -20,12 +21,26 @@ class Menu extends React.Component {
       this.props.getAccountBalance({ account: account.address })
     }
   }
-  showModal = () => {
-    this.setState({ visible: true })
+  setVisible = (key) => {
+    this.setState({ [key]: true })
   }
   hideModal = () => {
     this.setState({ visible: false })
   }
+  _renderAccountMenu = () => (
+    <Menu>
+      <Menu.Item>
+        <a onClick={() => this.setVisible('createAccountModalVisible')}>
+          Create Wallet
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a>
+          Already Has Wallet?
+        </a>
+      </Menu.Item>
+    </Menu>
+  )
   render () {
     const { account } = this.props
 
@@ -43,9 +58,11 @@ class Menu extends React.Component {
               <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>U</Avatar>
             </div>
             */}
-            <div className={styles.profile}>
-              <Button onClick={this.showModal} shape="circle" theme="twoTone" icon="smile" />
-            </div>
+            <Dropdown overlay={this._renderAccountMenu()} placement="bottomRight">
+              <div className={styles.profile}>
+                <Button shape="circle" theme="twoTone" icon="smile" />
+              </div>
+            </Dropdown>
             <div className={styles.balance}>
               {account.balance} PTC
             </div>
@@ -61,10 +78,11 @@ class Menu extends React.Component {
           onOk={this.hideModal}
           onCancel={this.hideModal}
         >
-          <p>{'Web 环境生成钱包地址正在开发中，请先使用 cql 工具在终端中生成公私钥对，具体请参考'}</p>
-          <br />
-          <a href='https://developers.covenantsql.io/docs/quickstart' target='_blank' rel='noopener noreferrer'>Quick Start</a>
+          create / upload
         </Modal>
+        {
+          this.state.createAccountModalVisible && <CreateWalletModal show={true} />
+        }
       </header>
     )
   }
@@ -76,4 +94,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getAccountBalance
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Menu)
+export default connect(mapStateToProps, mapDispatchToProps)(Nav)

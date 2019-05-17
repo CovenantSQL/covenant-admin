@@ -1,0 +1,19 @@
+.label {
+  margin-bottom: 4px;
+}
+.action {
+  display: flex;
+  .createBtn {
+    margin-left: 5px;
+  }
+}
+.walletNkey {
+  font-size: 12px;
+  margin-top: 8px;
+
+  div > * {
+    white-space: pre-wrap;
+    width: 100%;
+    height: auto;
+  }
+}
