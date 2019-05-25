@@ -1,5 +1,7 @@
 ## CovenantSQL Admin
 
+> 🚧(Privately WIP, new features coming...)
+
 ![](/imgs/admin.png)
 
 ### usage
