@@ -1,6 +1,6 @@
-## CovenantSQL Admin
+## CovenantSQL Admin [DEPRECATED]
 
-> 🚧(Privately WIP, new features coming...)
+> DEPRECATED, all features moved to [CQL Cloud](https://github.com/CovenantSQL/cql-cloud-fe).
 
 ![](/imgs/admin.png)
 
